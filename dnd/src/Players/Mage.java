@@ -1,5 +1,7 @@
 package Players;
 
+import java.util.Random;
+
 public class Mage extends Player {
 
     public int manaPool;
@@ -31,12 +33,14 @@ public class Mage extends Player {
 
     @Override
     public void castAbility() {
+        Random rand = new Random();
         currentMana = currentMana - manaCost;
         int hits = 0;
-        while (hits < hitsCount /* &  range(enemy, player) < abilityRange */ ) {  // ∧ (∃ living enemy s.t. range(enemy, player) < ability range) do
-            //Select random enemy within ability range.
-            //Deal damage (reduce health value) to the chosen enemy for an amount equal to spell power
+        //List enemiesInRange = searchForEnemies(abilityRange);
+        while (hits < hitsCount /* &  enemiesInRange.length > 0 */ ) {  // ∧ (∃ living enemy s.t. range(enemy, player) < ability range) do
+            //Enemy enemy = enemiesInRange.get(rand.nextInt(enemiesInRange.size()));
             //(each enemy may try to defend itself).
+            //enemy.setHealthPool( -spellPower );
             hits += 1;
         }
 

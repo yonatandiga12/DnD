@@ -16,7 +16,7 @@ public abstract class Player extends Unit {
 
 
     public void setExperience(int num) {
-        experience = experience + (num);
+        experience += (num);
     }
 
     public void setLevel() {
@@ -25,7 +25,7 @@ public abstract class Player extends Unit {
 
     public void setHealthPool(int num) {
         if (healthPool + (num) <= healthAmount)
-            healthPool = healthPool + (num);
+            healthPool += (num);
     }
 
     public void setCurrentHealth() {
@@ -33,11 +33,11 @@ public abstract class Player extends Unit {
     }
 
     public void setAttack(int num) {
-        attack = attack + (num);
+        attack += (num);
     }
 
     public void setDefense(int num) {
-        defense = defense + (num);
+        defense += (num);
     }
 
     public abstract void castAbility();
@@ -52,5 +52,7 @@ public abstract class Player extends Unit {
     }
 
     public abstract void uniquelevelUp();
+
+    public abstract void gameTick();
 
 }
