@@ -1,7 +1,7 @@
 package Players;
 
 public class Mage extends Player {
-
+    //TTTTest GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGgggit
     public int manaPool;
     public int currentMana;
     public int manaCost;
