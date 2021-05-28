@@ -1,5 +1,7 @@
 package Players;
 
+import Position.Position;
+
 import java.util.Random;
 
 public class Warrior extends Player{
@@ -8,8 +10,8 @@ public class Warrior extends Player{
     public int remainingCooldown;
 
 
-    public Warrior (String name, int health, int attack, int defense, int cooldown){
-        super(name, health, attack, defense);
+    public Warrior (String name, int health, int attack, int defense, Position position,  int cooldown){
+        super(name, health, attack, defense, position);
         this.coolDown = cooldown;
         this.remainingCooldown = cooldown;
         this.ability = "Avenger’s Shield";
@@ -18,6 +20,7 @@ public class Warrior extends Player{
     public void gameTick(){
         remainingCooldown -= 1;
     }
+
 
     @Override
     public void uniquelevelUp() {
@@ -43,4 +46,11 @@ public class Warrior extends Player{
             setHealthPool(10 * defense);
         }
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+
 }

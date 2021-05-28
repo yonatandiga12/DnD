@@ -1,13 +1,15 @@
 package Players;
 
+import Position.Position;
+
 public class Rogue extends Player{
 
     public int currEnergy;
     public int cost;
 
 
-    public Rogue(String name, int health, int attack, int defense, int cost) {
-        super(name, health, attack, defense);
+    public Rogue(String name, int health, int attack, int defense, Position position,  int cost) {
+        super(name, health, attack, defense, position);
         this.ability = "Fan of Knives";
         this.currEnergy = 100;
         this.cost = cost;
@@ -37,5 +39,10 @@ public class Rogue extends Player{
         setHealthPool(10 * defense);
     }
 
+
+    @Override
+    public String toString() {
+        return name;
+    }
 
 }

@@ -1,4 +1,5 @@
 package Players;
+import Position.Position;
 import Units.Unit;
 public abstract class Player extends Unit {
 
@@ -7,7 +8,8 @@ public abstract class Player extends Unit {
     public int currentHealth = healthPool;
     public String ability = "";
 
-    public Player(String name, int health, int attack, int defense){
+    public Player(String name, int health, int attack, int defense, Position position){
+        super(position, '@');
         this.name = name;
         this.healthAmount = health;
         this.attack = attack;
@@ -54,5 +56,7 @@ public abstract class Player extends Unit {
     public abstract void uniquelevelUp();
 
     public abstract void gameTick();
+
+    public abstract String toString();
 
 }

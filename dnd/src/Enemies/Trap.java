@@ -1,5 +1,7 @@
 package Enemies;
 
+import Position.Position;
+
 public class Trap extends Enemy{
 
     public int visibilityTime;
@@ -7,8 +9,8 @@ public class Trap extends Enemy{
     public int ticksCount = 0;
     public boolean visible = true;
 
-    public Trap(String name, char tile, int health, int attack, int defense, int experienceValue, int visibilityTime, int invisibilityTime) {
-        super(name, tile, health, attack, defense, experienceValue);
+    public Trap(String name, char tile, int health, int attack, int defense, int experienceValue, Position position,  int visibilityTime, int invisibilityTime) {
+        super(name, tile, health, attack, defense, experienceValue, position);
         this.visibilityTime = visibilityTime;
         this.invisibilityTime = invisibilityTime;
 
@@ -26,5 +28,10 @@ public class Trap extends Enemy{
             //if ( player != null )
             //    attack(player);
         }
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

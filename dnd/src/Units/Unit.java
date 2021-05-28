@@ -1,11 +1,19 @@
 package Units;
 
-public abstract class Unit {
+import Position.Position;
+import Tile.Tile;
+
+public abstract class Unit extends Tile {
     public String name;
     public int healthAmount;
     public int healthPool = healthAmount;
     public int attack;
     public int defense;
+
+
+    public Unit(Position position, char sign) {
+        super(position, sign);
+    }
 
     // Getter
     public String getName(){

@@ -1,5 +1,7 @@
 package Players;
 
+import Position.Position;
+
 import java.util.Random;
 
 public class Mage extends Player {
@@ -12,8 +14,8 @@ public class Mage extends Player {
     public int abilityRange;
 
 
-    public Mage(String name, int health, int attack, int defense, int manaPool, int manaCost, int spellPower, int hitsCount , int abilityRange){
-        super(name, health, attack, defense);
+    public Mage(String name, int health, int attack, int defense, Position position,  int manaPool, int manaCost, int spellPower, int hitsCount , int abilityRange){
+        super(name, health, attack, defense, position);
         this.manaPool = manaPool;
         this.currentMana = manaPool / 4;
         this.manaCost = manaCost;
@@ -53,4 +55,11 @@ public class Mage extends Player {
         spellPower = spellPower + (10 * level);
 
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+
 }
