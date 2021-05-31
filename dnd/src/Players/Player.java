@@ -1,19 +1,32 @@
 package Players;
+import Interfaces.InputProvider;
+import Interfaces.MessageCallback;
+import Interfaces.PlayerDeathCallback;
 import Position.Position;
 import Units.Unit;
 public abstract class Player extends Unit {
 
+    private PlayerDeathCallback deathCallback;
+    private InputProvider inputProvider;
     public int experience = 0;
     public int level = 1;
     public int currentHealth = healthPool;
     public String ability = "";
 
-    public Player(String name, int health, int attack, int defense, Position position){
-        super(position, '@');
+
+    public Player(String name, int health, int attack, int defense){
+        super('@');
         this.name = name;
         this.healthAmount = health;
         this.attack = attack;
         this.defense = defense;
+    }
+
+    public Player initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider){
+        super.initialize(position, messageCallback);
+        this.deathCallback = deathCallback;
+        this.inputProvider = inputProvider;
+        return this;
     }
 
 
@@ -58,5 +71,9 @@ public abstract class Player extends Unit {
     public abstract void gameTick();
 
     public abstract String toString();
+
+    public abstract String describe();
+
+
 
 }

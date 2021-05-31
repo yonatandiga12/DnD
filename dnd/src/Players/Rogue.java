@@ -1,5 +1,8 @@
 package Players;
 
+import Interfaces.InputProvider;
+import Interfaces.MessageCallback;
+import Interfaces.PlayerDeathCallback;
 import Position.Position;
 
 public class Rogue extends Player{
@@ -8,11 +11,15 @@ public class Rogue extends Player{
     public int cost;
 
 
-    public Rogue(String name, int health, int attack, int defense, Position position,  int cost) {
-        super(name, health, attack, defense, position);
+    public Rogue(String name, int health, int attack, int defense,  int cost) {
+        super(name, health, attack, defense);
         this.ability = "Fan of Knives";
         this.currEnergy = 100;
         this.cost = cost;
+    }
+
+    public Player initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider) {
+        return super.initialize(position, messageCallback, deathCallback, inputProvider);
     }
 
 
@@ -43,6 +50,11 @@ public class Rogue extends Player{
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public String describe() {
+        return null;
     }
 
 }

@@ -1,5 +1,9 @@
 package Enemies;
 
+import Interfaces.InputProvider;
+import Interfaces.MessageCallback;
+import Interfaces.PlayerDeathCallback;
+import Players.Player;
 import Position.Position;
 
 public class Monster extends Enemy {
@@ -8,10 +12,15 @@ public class Monster extends Enemy {
     public int experienceValue;
     public int visionRange;
 
-    public Monster(String name, char tile, int health, int attack, int defense, int experienceValue, Position position, int visionRange) {
-        super(name, tile, health, attack, defense, experienceValue, position);
+    public Monster(String name, char tile, int health, int attack, int defense, int experienceValue, int visionRange) {
+        super(name, tile, health, attack, defense, experienceValue);
         this.visionRange = visionRange;
+        initialize(position);
 
+    }
+
+    public Enemy initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider) {
+        return super.initialize(position, messageCallback, deathCallback, inputProvider);
     }
 
     @Override

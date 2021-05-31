@@ -1,5 +1,8 @@
 package Players;
 
+import Interfaces.InputProvider;
+import Interfaces.MessageCallback;
+import Interfaces.PlayerDeathCallback;
 import Position.Position;
 
 import java.util.Random;
@@ -10,11 +13,15 @@ public class Warrior extends Player{
     public int remainingCooldown;
 
 
-    public Warrior (String name, int health, int attack, int defense, Position position,  int cooldown){
-        super(name, health, attack, defense, position);
+    public Warrior (String name, int health, int attack, int defense,  int cooldown){
+        super(name, health, attack, defense);
         this.coolDown = cooldown;
         this.remainingCooldown = cooldown;
         this.ability = "Avenger’s Shield";
+    }
+
+    public Player initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider) {
+        return super.initialize(position, messageCallback, deathCallback, inputProvider);
     }
 
     public void gameTick(){
@@ -50,6 +57,12 @@ public class Warrior extends Player{
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public String describe() {
+        return name + "     " + "Health: " + healthAmount;
+        //Jon Snow                Health: 300/300         Attack: 30              Defense: 4              Level: 1                Experience: 0/50                Cooldown: 0/3
     }
 
 

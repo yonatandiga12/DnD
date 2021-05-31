@@ -1,4 +1,5 @@
 import Enemies.Enemy;
+import Interfaces.InputProvider;
 import Players.Mage;
 import Players.Player;
 import Players.Rogue;
@@ -12,46 +13,51 @@ import java.util.List;
 
 public class GameManager {
 
-        private LevelInitializer levelInitializer;
-        private String path;
-        private String playerName;
-        public Board board;
-        public Player player;
-        private int currLevel = 1;
+    protected InputProvider inputProvider;
+    private LevelInitializer levelInitializer;
+    private int currLevel = 1;
+    private GameLevel gameLevel;
 
-    protected List<Enemy> enemiesList = new ArrayList<>();
+    //public Board board;
+    //public Player player;
+    //private List<Enemy> enemiesList = new ArrayList<>();
 
-        public GameManager(String path, int playerNum){
-            this.path = path;
-            playerName = getPlayer(playerNum);
-            levelInitializer = new LevelInitializer(path, playerName);
-            //board = createBoard(path);
-
-        }
-
-    public void createFirstBoard() {
-
-        board = levelInitializer.loadLevel(currLevel);
-        // do loop on levels
-
+    public GameManager(String path, int chosenPlayer) {
+        //print all playeres in screen that the user can choose from.
+        Player player = choosePlayer(chosenPlayer); //get from user
+        System.out.println(player.describe());
+        levelInitializer = new LevelInitializer(path, player);
+        gameLevel = levelInitializer.initGameLevel(currLevel);
+        System.out.println(player.getPosition());
+        //gameLevel.startLevel();
     }
 
-    public String getPlayer(int p) {
-        switch (p) {
-            // to be continued...
+    private Player choosePlayer(int playerNum) {
+        Player player;
+        switch (playerNum){
             case 1:
-                playerName = "Jon Snow";
+                player = new Warrior( "Jon Snow", 300, 30, 4, 3);
+                break;
             case 2:
-                playerName = "Jon Snow";
+                player = new Warrior( "The Hound",400 , 20 , 6 , 5);
+                break;
             case 3:
-                playerName = "Jon Snow";
+                player = new Mage("Melisandre", 100, 5, 1, 300, 30, 15, 3, 6);
+                break;
             case 4:
-                playerName = "Jon Snow";
-
+                player = new Mage("Thoros of Myr", 250, 25, 4,150, 20, 15, 3, 4 );
+                break;
+            case 5:
+                player = new Rogue("Arya Stark", 150, 40, 2, 20);
+                break;
+            case 6:
+                player = new Rogue("Bronn",250, 35, 2, 50);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + playerNum);
         }
-        return playerName;
+        return player;
     }
-
 
 
 

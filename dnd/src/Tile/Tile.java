@@ -7,12 +7,16 @@ public abstract class Tile {
     protected Position position;
     protected char sign;
 
-    public Tile(Position position, char sign){
-        this.position = position;
+    public Tile(char sign){
         this.sign = sign;
+    }
+
+    protected void initialize(Position position){
+        this.position = position;
     }
 
     public Position getPosition(){
         return position;
     }
+
 }

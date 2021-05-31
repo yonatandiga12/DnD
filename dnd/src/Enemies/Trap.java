@@ -1,5 +1,8 @@
 package Enemies;
 
+import Interfaces.InputProvider;
+import Interfaces.MessageCallback;
+import Interfaces.PlayerDeathCallback;
 import Position.Position;
 
 public class Trap extends Enemy{
@@ -9,13 +12,16 @@ public class Trap extends Enemy{
     public int ticksCount = 0;
     public boolean visible = true;
 
-    public Trap(String name, char tile, int health, int attack, int defense, int experienceValue, Position position,  int visibilityTime, int invisibilityTime) {
-        super(name, tile, health, attack, defense, experienceValue, position);
+    public Trap(String name, char tile, int health, int attack, int defense, int experienceValue,  int visibilityTime, int invisibilityTime) {
+        super(name, tile, health, attack, defense, experienceValue);
         this.visibilityTime = visibilityTime;
         this.invisibilityTime = invisibilityTime;
-
+        initialize(position);
     }
 
+    public Enemy initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider) {
+        return super.initialize(position, messageCallback, deathCallback, inputProvider);
+    }
 
     @Override
     public void gameTick() {

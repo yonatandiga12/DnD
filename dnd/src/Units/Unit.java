@@ -1,5 +1,6 @@
 package Units;
 
+import Interfaces.MessageCallback;
 import Position.Position;
 import Tile.Tile;
 
@@ -9,10 +10,16 @@ public abstract class Unit extends Tile {
     public int healthPool = healthAmount;
     public int attack;
     public int defense;
+    private MessageCallback messageCallback;
 
 
-    public Unit(Position position, char sign) {
-        super(position, sign);
+    public Unit( char sign) {
+        super(sign);
+    }
+
+    protected void initialize(Position position, MessageCallback messageCallback){
+        super.initialize(position);
+        this.messageCallback = messageCallback;
     }
 
     // Getter

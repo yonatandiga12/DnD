@@ -1,5 +1,8 @@
 package Players;
 
+import Interfaces.InputProvider;
+import Interfaces.MessageCallback;
+import Interfaces.PlayerDeathCallback;
 import Position.Position;
 
 import java.util.Random;
@@ -14,8 +17,8 @@ public class Mage extends Player {
     public int abilityRange;
 
 
-    public Mage(String name, int health, int attack, int defense, Position position,  int manaPool, int manaCost, int spellPower, int hitsCount , int abilityRange){
-        super(name, health, attack, defense, position);
+    public Mage(String name, int health, int attack, int defense,  int manaPool, int manaCost, int spellPower, int hitsCount , int abilityRange){
+        super(name, health, attack, defense);
         this.manaPool = manaPool;
         this.currentMana = manaPool / 4;
         this.manaCost = manaCost;
@@ -26,7 +29,9 @@ public class Mage extends Player {
     }
 
 
-
+    public Player initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider) {
+        return super.initialize(position, messageCallback, deathCallback, inputProvider);
+    }
 
     public void gameTick(){
         currentMana = Math.min(manaPool, currentMana + 1 * level) ;
@@ -59,6 +64,11 @@ public class Mage extends Player {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public String describe() {
+        return null;
     }
 
 
