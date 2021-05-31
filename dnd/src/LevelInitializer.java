@@ -15,7 +15,7 @@ public class LevelInitializer {
     protected String stringPath;
     protected String playerName;
     protected Board board;
-    private int currLevel = 1;
+    //private int currLevel = 1;
     private String[] levelsPaths;
 
 
@@ -24,7 +24,7 @@ public class LevelInitializer {
         this.playerName = namePlayer;   // This shouldn't be here, supposed to read it through the cmd
 
         ArrangePaths();
-        loadLevel();
+        //loadLevel(1);
 
     }
 
@@ -44,8 +44,8 @@ public class LevelInitializer {
     }
 
     // Loads from the file all the tiles.
-    protected void loadLevel(){
-        List<String> listofFile = readFromFileToString(levelsPaths[currLevel - 1]);
+    protected Board loadLevel(int currLevel){
+        List<String> listofFile = readFromFileToList(levelsPaths[currLevel - 1]);
         //List<String> listofFile = readFromFileToString(levelsPaths[2]);
 
         //GameManager m = new GameManager();
@@ -71,7 +71,8 @@ public class LevelInitializer {
                 }
             }
         }
-        currLevel += 1;
+        //currLevel += 1;
+        return board;
     }
 
 
@@ -153,7 +154,7 @@ public class LevelInitializer {
     }
 
 
-    public static List<String> readFromFileToString(String path) {
+    public static List<String> readFromFileToList(String path) {
         List<String> lines = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(path));
