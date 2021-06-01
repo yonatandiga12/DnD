@@ -17,24 +17,39 @@ public class GameManager {
     private LevelInitializer levelInitializer;
     private int currLevel = 1;
     private GameLevel gameLevel;
+    private Player yourPlayer;
+    private List<Player> allPlayers;
 
     //public Board board;
     //public Player player;
     //private List<Enemy> enemiesList = new ArrayList<>();
 
     public GameManager(String path, int chosenPlayer) {
-        //print all playeres in screen that the user can choose from.
-        Player player = choosePlayer(chosenPlayer); //get from user
-        levelInitializer = new LevelInitializer(path, player);
+        //print all playeres in screen that the user can choose from:
+        allPlayers = createAllPlayers();
+        printAllPlayers();
+        yourPlayer = choosePlayer(chosenPlayer); //get from user
+        levelInitializer = new LevelInitializer(path, yourPlayer);
         gameLevel = levelInitializer.initGameLevel(currLevel);
 
         System.out.println("Printing in GameManager");
-        System.out.println(player.describe());
-        System.out.println(player.getPosition());
+        System.out.println(yourPlayer.describe());
+        System.out.println(yourPlayer.getPosition());
         System.out.println(levelInitializer.board);
-        //gameLevel.startLevel();
+        System.out.println("please choose your action: ('a'/'d'/'s'/'w'/'e'/'q')");
+        gameLevel.runTick(); //or run all level
     }
 
+    private List<Player> createAllPlayers() {
+        List<Player> allPlayers = new ArrayList<Player>(6);
+        allPlayers.add(0, new Warrior("Jon Snow", 300, 30, 4, 3));
+        allPlayers.add(1, new Warrior("The Hound", 400, 20, 6, 5));
+        allPlayers.add(2, new Mage("Melisandre", 100, 5, 1, 300, 30, 15, 3, 6));
+        allPlayers.add(3, new Mage("Thoros of Myr", 250, 25, 4, 150, 20, 15, 3, 4));
+        allPlayers.add(4, new Rogue("Arya Stark", 150, 40, 2, 20));
+        allPlayers.add(5, new Rogue("Bronn", 250, 35, 2, 50));
+        return allPlayers;
+    }
     private Player choosePlayer(int playerNum) {
         Player player;
         switch (playerNum){
@@ -63,6 +78,14 @@ public class GameManager {
     }
 
 
+
+    public void printAllPlayers() {
+        String output = "Please choose a Player!\n";
+        for (Player player : allPlayers) {
+            output = output + player.describe() + "\n";
+        }
+        System.out.println(output);
+    }
 
 
 }

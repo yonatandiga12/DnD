@@ -10,11 +10,17 @@ public class GameLevel {
     private Player player;
     private List<Enemy> enemies;
 
+
     //constructor:
     public GameLevel(Board board){
         this.board = board;
         this.player = board.player;
         this.enemies = board.enemiesList;
+    }
+
+    public void runTick(){
+
+
     }
 
     //called when the player dies
