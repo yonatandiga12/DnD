@@ -43,18 +43,12 @@ public class Rogue extends Player{
         //  they can try to defend themselves
         //  enemy.setHealthPool( -attack );   // Enemy healthAmount is decreased by warrior healthAmount*0.1
         //}
-        setHealthPool(10 * defense);
-    }
-
-
-    @Override
-    public String toString() {
-        return name;
+        setHealthAmount(10 * defense);
     }
 
     @Override
     public String describe() {
-        return null;
+        return super.describe()  + "     " + "Energy: " + currEnergy + "/100";
     }
 
 }

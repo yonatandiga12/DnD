@@ -6,15 +6,22 @@ import Tile.Tile;
 
 public abstract class Unit extends Tile {
     public String name;
+    public int healthPool;
     public int healthAmount;
-    public int healthPool = healthAmount;
     public int attack;
     public int defense;
+    public int experience;
     private MessageCallback messageCallback;
 
 
-    public Unit( char sign) {
+    public Unit( char sign, String name, int health, int attack, int defense, int experience) {
         super(sign);
+        this.name = name;
+        this.healthPool = health;
+        this.healthAmount = health;
+        this.attack = attack;
+        this.defense = defense;
+        this.experience = experience;
     }
 
     protected void initialize(Position position, MessageCallback messageCallback){
@@ -50,6 +57,11 @@ public abstract class Unit extends Tile {
     public int getDefense(){
         return defense;
     }
+
+    public String toString() {
+        return name;
+    }
+
 
 
 }

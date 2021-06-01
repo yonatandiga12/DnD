@@ -12,11 +12,14 @@ public class Empty extends Tile{
 
     public Empty(Position position) {
         super('.');
-        initialize(position);
+        this.position = position;
+        //initialize(position);
     }
 
+    /*
     protected void initialize(Position position, MessageCallback messageCallback){
         super.initialize(position);
         this.messageCallback = messageCallback;
     }
+     */
 }

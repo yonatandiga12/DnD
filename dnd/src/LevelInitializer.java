@@ -47,7 +47,6 @@ public class LevelInitializer {
             i += 1;
         }
         for(String m : levelsPaths){
-            //System.out.println(m);
         }
     }
 
@@ -69,7 +68,6 @@ public class LevelInitializer {
                 else if (currLetter == '.')
                     board.add(new Empty(p));
                 else if (currLetter == '@'){
-                    //String name, int health, int attack, int defense, Position position,  int cooldown
                     board.add(player);
                     player.initialize(p, null, null, null);}
                 else {

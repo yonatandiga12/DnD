@@ -12,17 +12,9 @@ public abstract class Enemy extends Unit {
     private PlayerDeathCallback deathCallback;
     private InputProvider inputProvider;
 
-    public char tileSign;
-    public int experienceValue;
 
     public Enemy(String name, char tileSign, int health, int attack, int defense, int experienceValue){
-        super(tileSign);
-        this.name = name;
-        this.healthAmount = health;
-        this.attack = attack;
-        this.defense = defense;
-        this.tileSign = tileSign;
-        this.experienceValue = experienceValue;
+        super(tileSign,name , health , attack, defense, experienceValue);
 
     }
 
@@ -43,5 +35,7 @@ public abstract class Enemy extends Unit {
 
     public abstract void gameTick();
 
-    public abstract String toString();
+    public String describe() {
+        return name + "     " + "Health: " + healthAmount + "/" + healthPool + "     " + "Attack: " + attack + "     " + "Defense: " + defense + "     " + "Experience value: " + experience ;
+    }
 }

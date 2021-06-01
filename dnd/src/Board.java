@@ -6,6 +6,7 @@ import Tile.Empty;
 
 import Units.Unit;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,6 +71,20 @@ public class Board {
     private int getIndex(Tile t){
        Position p = t.getPosition();
        return p.getIndex(width);
+    }
+
+    public String toString(){
+        String output = "";
+        int index = 0;
+        for(int i = 0; i < height; i++){
+            for(int j = 0; j < width; j++){
+                output += tiles.get(index).toChar();
+                index += 1;
+            }
+            output += "\n";
+        }
+
+        return output;
     }
 
 }

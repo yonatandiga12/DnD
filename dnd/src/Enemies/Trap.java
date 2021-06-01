@@ -36,8 +36,5 @@ public class Trap extends Enemy{
         }
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
+
 }

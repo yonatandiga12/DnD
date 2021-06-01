@@ -19,4 +19,7 @@ public abstract class Tile {
         return position;
     }
 
+    public char toChar() {
+        return sign;
+    }
 }

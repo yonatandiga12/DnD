@@ -28,8 +28,9 @@ public class Monster extends Enemy {
 
     }
 
-    @Override
-    public String toString() {
-        return name;
+
+    public String describe() {
+        return super.describe() + "     " + "Vision Range: " + visionRange;
     }
+
 }

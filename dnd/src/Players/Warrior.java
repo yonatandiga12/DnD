@@ -32,7 +32,7 @@ public class Warrior extends Player{
     @Override
     public void uniquelevelUp() {
         remainingCooldown = 0;      // remaining cooldown ← 0.
-        setHealthPool(5 * level);   // health pool ← health pool + (5 × level)
+        setHealthAmount(5 * level);   // health pool ← health pool + (5 × level)
         setAttack(2 * level);       // attack ← attack + (2 × level)
         setDefense(1 * level);      // defense ← defense + (1 × level)
        //inner();
@@ -48,21 +48,16 @@ public class Warrior extends Player{
             /* if(enemiesInRange.length > 0  ) {  */
                 //Enemy enemy = enemiesInRange.get(rand.nextInt(enemiesInRange.size()));
                 //enemy may try to defend itself).
-                //enemy.setHealthPool( -healthAmount * 0.1 );
+                //enemy.setHealthAmount( -healthPool * 0.1 );
             //}
-            setHealthPool(10 * defense);
+            setHealthAmount(10 * defense);
         }
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
 
     @Override
     public String describe() {
-        return name + "     " + "Health: " + healthAmount;
-        //Jon Snow                Health: 300/300         Attack: 30              Defense: 4              Level: 1                Experience: 0/50                Cooldown: 0/3
+        return super.describe() + "     " + "Cooldown: " + (coolDown - remainingCooldown) + "/" + coolDown;
     }
 
 

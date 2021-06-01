@@ -25,10 +25,13 @@ public class GameManager {
     public GameManager(String path, int chosenPlayer) {
         //print all playeres in screen that the user can choose from.
         Player player = choosePlayer(chosenPlayer); //get from user
-        System.out.println(player.describe());
         levelInitializer = new LevelInitializer(path, player);
         gameLevel = levelInitializer.initGameLevel(currLevel);
+
+        System.out.println("Printing in GameManager");
+        System.out.println(player.describe());
         System.out.println(player.getPosition());
+        System.out.println(levelInitializer.board);
         //gameLevel.startLevel();
     }
 

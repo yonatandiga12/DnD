@@ -8,7 +8,6 @@ import Position.Position;
 import java.util.Random;
 
 public class Mage extends Player {
-    //TTTTest GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGgggit
     public int manaPool;
     public int currentMana;
     public int manaCost;
@@ -62,13 +61,10 @@ public class Mage extends Player {
     }
 
     @Override
-    public String toString() {
-        return name;
-    }
-
-    @Override
     public String describe() {
-        return null;
+        //                 Mana: 75/300            Spell Power: 15
+        return super.describe()  + "     " + "Mana: " + currentMana + "/" + manaPool + "     " + "Spell Power: " + spellPower;
+
     }
 
 

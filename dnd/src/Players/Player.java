@@ -10,16 +10,14 @@ public abstract class Player extends Unit {
     private InputProvider inputProvider;
     public int experience = 0;
     public int level = 1;
-    public int currentHealth = healthPool;
-    public String ability = "";
+    protected int experienceCapacity = level * 50;
+    //public int healthAmount;
+    public String ability;
 
 
     public Player(String name, int health, int attack, int defense){
-        super('@');
-        this.name = name;
-        this.healthAmount = health;
-        this.attack = attack;
-        this.defense = defense;
+        super('@',name , health , attack, defense, 0);
+
     }
 
     public Player initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider){
@@ -38,13 +36,13 @@ public abstract class Player extends Unit {
         level += 1;
     }
 
-    public void setHealthPool(int num) {
-        if (healthPool + (num) <= healthAmount)
-            healthPool += (num);
+    public void setHealthAmount(int num) {
+        if (healthAmount + (num) <= healthPool)
+            healthAmount += (num);
     }
 
     public void setCurrentHealth() {
-        currentHealth = healthPool;
+        healthAmount = healthPool;
     }
 
     public void setAttack(int num) {
@@ -58,9 +56,10 @@ public abstract class Player extends Unit {
     public abstract void castAbility();
 
     public void levelUp() {
+
         setExperience(-50 * level);   // experience ← experience − (50 × level)
         setLevel();
-        setHealthPool(10 * level);         // health pool ← health pool + (10 × level)
+        setHealthAmount(10 * level);         // health pool ← health pool + (10 × level)
         setCurrentHealth();               // current health ← health pool
         setAttack(4 * level);              // attack ← attack + (4 × level)
         setDefense(1 * level);             // defense ← defense + (1 × level)
@@ -70,10 +69,9 @@ public abstract class Player extends Unit {
 
     public abstract void gameTick();
 
-    public abstract String toString();
-
-    public abstract String describe();
-
+    public String describe() {
+        return name + "     " + "Health: " + healthAmount + "/" + healthPool + "     " + "Attack: " + attack + "     " + "Defense: " + defense + "     " + "Level: " + level  + "     " + "Experience: " + experience + "/" + experienceCapacity;
+    }
 
 
 }
