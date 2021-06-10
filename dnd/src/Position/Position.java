@@ -29,8 +29,27 @@ public class Position {
         return new Position(this.x + x, this.y + y);
     }
 
+    public Position getInteractionPosition(char goTo){
+        Position p = this;
+         switch(goTo){
+            case 'w':
+                p = new Position(x , y - 1);
+            case 's':
+                p = new Position(x, y + 1);
+            case 'a':
+                 p = new Position(x - 1, y );
+            case 'd':
+                 p = new Position(x + 1, y);
+        }
+        return p;
+    }
 
-
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
 
     public String toString(){
         return "(" + x + "," + y + ")";

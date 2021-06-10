@@ -49,8 +49,9 @@ public class Board {
         enemiesList.remove(e);
     }
 
-    public Tile getTileInPosition(int x, int y){
-        return tiles.get(x + width * y);
+    public Tile getTileInPosition(Position p){
+
+        return tiles.get(p.getX() + width * p.getY());
     }
 
     /**

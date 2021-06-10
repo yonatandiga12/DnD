@@ -5,6 +5,7 @@ import Interfaces.MessageCallback;
 import Interfaces.PlayerDeathCallback;
 import Players.Player;
 import Position.Position;
+import Units.Unit;
 
 public class Empty extends Tile{
 
@@ -14,6 +15,11 @@ public class Empty extends Tile{
         super('.');
         this.position = position;
         //initialize(position);
+    }
+
+    @Override
+    public void accept(Unit u){
+        u.visit(this);
     }
 
     /*

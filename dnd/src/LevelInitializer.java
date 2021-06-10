@@ -26,6 +26,7 @@ public class LevelInitializer {
     public LevelInitializer(String path, Player player){
         this.stringPath = path;
         this.player = player;
+
         ArrangePaths();
     }
 
@@ -38,6 +39,7 @@ public class LevelInitializer {
 
     // Arrange all the paths for the levels for easy access
     protected void ArrangePaths(){
+
         File f = new File(stringPath);
         String[] PathsEnds = f.list();
         levelsPaths = new String[f.list().length];
@@ -45,8 +47,6 @@ public class LevelInitializer {
         for (String pathname : PathsEnds) {
             levelsPaths[i] = f.getAbsolutePath() + "\\" + pathname;
             i += 1;
-        }
-        for(String m : levelsPaths){
         }
     }
 

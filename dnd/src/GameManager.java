@@ -17,7 +17,7 @@ public class GameManager {
     private LevelInitializer levelInitializer;
     private int currLevel = 1;
     private GameLevel gameLevel;
-    private Player yourPlayer;
+    private Player player;
     private List<Player> allPlayers;
 
     //public Board board;
@@ -25,19 +25,63 @@ public class GameManager {
     //private List<Enemy> enemiesList = new ArrayList<>();
 
     public GameManager(String path, int chosenPlayer) {
+        player = startGameAndChoosePlayer(chosenPlayer);
+        levelInitializer = new LevelInitializer(path, player);
+
+
+       // while(gameIsActive()){
+       //     gameLevel = levelInitializer.initGameLevel(currLevel);
+       // }
+
+
+        System.out.println("Printing in GameManager");
+        System.out.println(player.describe());
+        System.out.println(player.getPosition());
+        System.out.println(levelInitializer.board);
+        System.out.println("please choose your action: ('a'/'d'/'s'/'w'/'e'/'q')");
+    }
+
+
+    public void doAction(char letter) {
+        gameLevel.runTick(letter); //or run all level
+
+
+    }
+
+
+
+
+
+    private boolean gameIsActive() {
+        //check if player is not dead
+        // maybe add more things
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private Player startGameAndChoosePlayer( int chosenPlayer) {
         //print all playeres in screen that the user can choose from:
         allPlayers = createAllPlayers();
         printAllPlayers();
-        yourPlayer = choosePlayer(chosenPlayer); //get from user
-        levelInitializer = new LevelInitializer(path, yourPlayer);
-        gameLevel = levelInitializer.initGameLevel(currLevel);
+        return choosePlayer(chosenPlayer); //get from user
 
-        System.out.println("Printing in GameManager");
-        System.out.println(yourPlayer.describe());
-        System.out.println(yourPlayer.getPosition());
-        System.out.println(levelInitializer.board);
-        System.out.println("please choose your action: ('a'/'d'/'s'/'w'/'e'/'q')");
-        gameLevel.runTick(); //or run all level
     }
 
     private List<Player> createAllPlayers() {
@@ -86,6 +130,7 @@ public class GameManager {
         }
         System.out.println(output);
     }
+
 
 
 }

@@ -25,15 +25,26 @@ public abstract class Enemy extends Unit {
         return this;
     }
 
-    public void setAttack(int num) {
-        attack += (num);
-    }
-
-    public void setDefense(int num) {
-        defense += (num);
-    }
-
     public abstract void gameTick();
+
+    @Override
+    public void accept(Unit u){
+        u.visit(this);
+    }
+
+
+    @Override
+    public void visit(Enemy e){
+        // do nothing
+    }
+
+    @Override
+    public void visit(Player p){
+        // when the enemy visits player
+    }
+
+
+
 
     public String describe() {
         return name + "     " + "Health: " + healthAmount + "/" + healthPool + "     " + "Attack: " + attack + "     " + "Defense: " + defense + "     " + "Experience value: " + experience ;

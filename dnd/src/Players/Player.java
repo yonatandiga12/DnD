@@ -1,4 +1,5 @@
 package Players;
+import Enemies.Enemy;
 import Interfaces.InputProvider;
 import Interfaces.MessageCallback;
 import Interfaces.PlayerDeathCallback;
@@ -36,22 +37,10 @@ public abstract class Player extends Unit {
         level += 1;
     }
 
-    public void setHealthAmount(int num) {
-        if (healthAmount + (num) <= healthPool)
-            healthAmount += (num);
-    }
-
     public void setCurrentHealth() {
         healthAmount = healthPool;
     }
 
-    public void setAttack(int num) {
-        attack += (num);
-    }
-
-    public void setDefense(int num) {
-        defense += (num);
-    }
 
     public abstract void castAbility();
 
@@ -69,9 +58,23 @@ public abstract class Player extends Unit {
 
     public abstract void gameTick();
 
+    @Override
+    public void accept(Unit u){
+        u.visit(this);
+    }
+
     public String describe() {
         return name + "     " + "Health: " + healthAmount + "/" + healthPool + "     " + "Attack: " + attack + "     " + "Defense: " + defense + "     " + "Level: " + level  + "     " + "Experience: " + experience + "/" + experienceCapacity;
     }
 
+    @Override
+    public void visit(Enemy e){
+        // player visits enemy
+    }
+
+    @Override
+    public void visit(Player p){
+        // do nothing cant be 2 players in the game
+    }
 
 }

@@ -62,7 +62,6 @@ public class Mage extends Player {
 
     @Override
     public String describe() {
-        //                 Mana: 75/300            Spell Power: 15
         return super.describe()  + "     " + "Mana: " + currentMana + "/" + manaPool + "     " + "Spell Power: " + spellPower;
 
     }

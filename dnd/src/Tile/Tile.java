@@ -1,6 +1,7 @@
 package Tile;
 
 import Position.Position;
+import Units.Unit;
 
 public abstract class Tile {
 
@@ -19,7 +20,13 @@ public abstract class Tile {
         return position;
     }
 
+    public void setPosition(Position position){
+        this.position = position;
+    }
+
     public char toChar() {
         return sign;
     }
+
+    public abstract void accept(Unit unit);
 }

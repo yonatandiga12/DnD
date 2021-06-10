@@ -10,7 +10,6 @@ public class Main {
     public static void main(String[] args) {
 
 
-
         // write your code here
 
         //LevelInitializer e = new LevelInitializer("C:\\בן גוריון\\סמסטר ב\\מונחה עצמים\\Project3\\levels_dir", "Arya Stark");
