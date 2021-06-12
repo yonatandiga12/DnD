@@ -1,10 +1,12 @@
 package Players;
 
+import Enemies.Enemy;
 import Interfaces.InputProvider;
 import Interfaces.MessageCallback;
 import Interfaces.PlayerDeathCallback;
 import Position.Position;
 
+import java.util.List;
 import java.util.Random;
 
 public class Warrior extends Player{
@@ -25,29 +27,34 @@ public class Warrior extends Player{
     }
 
     public void gameTick(){
-        remainingCooldown -= 1;
+        if(remainingCooldown > 0)
+            remainingCooldown -= 1;
     }
 
 
     @Override
-    public void uniquelevelUp() {
+    public void levelUp() {
+        int prevAttack = getAttack();
+        int prevHealth = getHealthPool();
+        int prevDefense = getDefense();
+        super.levelUp();
         remainingCooldown = 0;      // remaining cooldown ← 0.
-        setHealthAmount(5 * level);   // health pool ← health pool + (5 × level)
-        setAttack(2 * level);       // attack ← attack + (2 × level)
-        setDefense(1 * level);      // defense ← defense + (1 × level)
-       //inner();
+        setHealthPool(5);
+        setCurrentHealth();
+        setAttack(2 * getLevel());       // attack ← attack + (2 × level)
+        setDefense(1 * getLevel());      // defense ← defense + (1 × level)
+        messageCallback.send(String.format("%s reached level %d: +%d Health, +%d Attack, +%d Defense",getName(), getLevel(), getHealthPool() - prevHealth, getAttack() - prevAttack, getDefense() - prevDefense ));
+
     }
 
     @Override
     public void castAbility() {
-        //????????????The warrior’s ability has a cooldown, meaning it can only be used once every ability cooldown game ticks.
         Random rand = new Random();
         if(remainingCooldown == 0) {
             remainingCooldown = coolDown;
-            //List enemiesInRange = searchForEnemies(abilityRange);
-            /* if(enemiesInRange.length > 0  ) {  */
+            //List<Enemy> enemiesInRange = searchForEnemies(3);
+             //if(enemiesInRange.length > 0  ) {
                 //Enemy enemy = enemiesInRange.get(rand.nextInt(enemiesInRange.size()));
-                //enemy may try to defend itself).
                 //enemy.setHealthAmount( -healthPool * 0.1 );
             //}
             setHealthAmount(10 * defense);
@@ -57,7 +64,7 @@ public class Warrior extends Player{
 
     @Override
     public String describe() {
-        return super.describe() + "     " + "Cooldown: " + (coolDown - remainingCooldown) + "/" + coolDown;
+        return super.describe() + "     " + "Cooldown: " + (remainingCooldown) + "/" + coolDown;
     }
 
 

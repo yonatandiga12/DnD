@@ -1,5 +1,6 @@
 package Players;
 import Enemies.Enemy;
+import Interfaces.EnemyDeathCallback;
 import Interfaces.InputProvider;
 import Interfaces.MessageCallback;
 import Interfaces.PlayerDeathCallback;
@@ -23,38 +24,58 @@ public abstract class Player extends Unit {
 
     public Player initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider){
         super.initialize(position, messageCallback);
-        this.deathCallback = deathCallback;
-        this.inputProvider = inputProvider;
+        //this.deathCallback = deathCallback;
+        //this.inputProvider = inputProvider;
         return this;
     }
 
 
     public void setExperience(int num) {
         experience += (num);
+        if(experience >= experienceCapacity){
+            this.levelUp();
+        }
     }
-
+    private void setExperienceAfterKill(int experienceGained) {
+        //int currExperience;
+        while(experienceGained >= experienceCapacity - getExperience()){
+            int experienceDiff = Math.min(experienceCapacity - getExperience(), experienceGained);
+            setExperience(experienceDiff);
+            experienceGained -= experienceDiff;
+        }
+        setExperience(experienceGained);
+    }
+    public int getLevel() {
+        return level;
+    }
     public void setLevel() {
         level += 1;
     }
+    public void setHealthPool(int num){
+        healthPool += num* level;
+    }
 
-    public void setCurrentHealth() {
-        healthAmount = healthPool;
+    public void setExperienceCapacity(){
+        experienceCapacity = level* 50;
+    }
+    public int getExperience(){
+        return experience;
     }
 
 
     public abstract void castAbility();
 
     public void levelUp() {
-
-        setExperience(-50 * level);   // experience ← experience − (50 × level)
+        setExperience(-getExperience());   // experience ← experience − (50 × level)
         setLevel();
-        setHealthAmount(10 * level);         // health pool ← health pool + (10 × level)
+        setExperienceCapacity();
+        setHealthPool(10);
         setCurrentHealth();               // current health ← health pool
-        setAttack(4 * level);              // attack ← attack + (4 × level)
-        setDefense(1 * level);             // defense ← defense + (1 × level)
+        setAttack(4 * getLevel());              // attack ← attack + (4 × level)
+        setDefense(2 * getLevel());             // defense ← defense + (1 × level)
     }
 
-    public abstract void uniquelevelUp();
+    //public abstract void uniquelevelUp();
 
     public abstract void gameTick();
 
@@ -64,13 +85,42 @@ public abstract class Player extends Unit {
     }
 
     public String describe() {
-        return name + "     " + "Health: " + healthAmount + "/" + healthPool + "     " + "Attack: " + attack + "     " + "Defense: " + defense + "     " + "Level: " + level  + "     " + "Experience: " + experience + "/" + experienceCapacity;
+        return super.describe() + "     " + "Level: " + level  + "     " + "Experience: " + experience + "/" + experienceCapacity;
     }
 
     @Override
     public void visit(Enemy e){
-        // player visits enemy
+        super.battle(e);
+        if(!e.alive()){
+            swapPostions(e);
+            onKill(e);
+        }
     }
+
+    protected void onKill(Enemy e) {
+        int experienceGained = e.getExperience();
+        messageCallback.send(String.format("%s died. %s gained %d experience.", e.getName(), getName(), experienceGained));
+        setExperienceAfterKill(experienceGained);
+        //setExperience(experienceGained);
+        e.onDeath();
+    }
+
+
+
+    @Override
+    public void onDeath() {
+        messageCallback.send("You Lost.");
+        deathCallback.call();
+    }
+
+    public void setDeathCallback(PlayerDeathCallback pdc){
+        this.deathCallback= pdc;
+    }
+
+    public void setMessageCallBack(MessageCallback m){
+        this.messageCallback = m;
+    }
+
 
     @Override
     public void visit(Player p){

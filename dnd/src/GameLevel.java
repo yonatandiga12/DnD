@@ -1,6 +1,8 @@
 import Enemies.Enemy;
 import Players.Player;
 import Players.Warrior;
+import Tile.*;
+
 
 import java.util.List;
 
@@ -21,11 +23,12 @@ public class GameLevel {
 
     public void runTick(char letter){
         if(letter == 'w' | letter == 'a' | letter == 's' | letter == 'd'){
-            player.interact(board.getTileInPosition(player.getPosition().getInteractionPosition(letter)));
-            //player.move(letter);
+            Tile t = board.getTileInPosition(player.getPosition().getInteractionPosition(letter));
+            player.interact(t);
+            player.gameTick();
         }
         else if( letter == 'e'){
-            // special abillity
+            player.castAbility();
         }
         else if( letter == 'q'){
             //do nothing;
@@ -35,9 +38,14 @@ public class GameLevel {
         }
 
         for(Enemy e : enemies){
-            //e.interact()
-            //e.doAction();
+            //e.interact();
         }
+
+        player.messageCallback.send("Player position : " + player.getPosition());
+
+        player.messageCallback.send(player.describe());
+        player.messageCallback.send(board.toString());
+
     }
 
     //called when the player dies
@@ -54,5 +62,14 @@ public class GameLevel {
     @Override
     public String toString() {
         return String.format("%s\n%s", board, player.describe());
+    }
+
+    public void removeEnemy(Enemy e) {
+        enemies.remove(e);
+        board.removeEnemy(e);
+    }
+
+    public void removePlayer() {
+        board.removePlayer();
     }
 }

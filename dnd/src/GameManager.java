@@ -33,17 +33,20 @@ public class GameManager {
        //     gameLevel = levelInitializer.initGameLevel(currLevel);
        // }
 
-
+        gameLevel = levelInitializer.initGameLevel(currLevel);
         System.out.println("Printing in GameManager");
-        System.out.println(player.describe());
+        System.out.println("You chose :  " + player.describe());
         System.out.println(player.getPosition());
         System.out.println(levelInitializer.board);
         System.out.println("please choose your action: ('a'/'d'/'s'/'w'/'e'/'q')");
     }
 
 
-    public void doAction(char letter) {
-        gameLevel.runTick(letter); //or run all level
+    public void doAction(String l) {
+        if(l.length() != 0){
+            gameLevel.runTick(l.charAt(0)); //or run all level
+
+        }
 
 
     }
@@ -98,22 +101,28 @@ public class GameManager {
         Player player;
         switch (playerNum){
             case 1:
-                player = new Warrior( "Jon Snow", 300, 30, 4, 3);
+                player = allPlayers.get(0);
+                //player = new Warrior( "Jon Snow", 300, 30, 4, 3);
                 break;
             case 2:
-                player = new Warrior( "The Hound",400 , 20 , 6 , 5);
+                player = allPlayers.get(1);
+                //player = new Warrior( "The Hound",400 , 20 , 6 , 5);
                 break;
             case 3:
-                player = new Mage("Melisandre", 100, 5, 1, 300, 30, 15, 3, 6);
+                player = allPlayers.get(2);
+                //player = new Mage("Melisandre", 100, 5, 1, 300, 30, 15, 3, 6);
                 break;
             case 4:
-                player = new Mage("Thoros of Myr", 250, 25, 4,150, 20, 15, 3, 4 );
+                player = allPlayers.get(3);
+                //player = new Mage("Thoros of Myr", 250, 25, 4,150, 20, 15, 3, 4 );
                 break;
             case 5:
-                player = new Rogue("Arya Stark", 150, 40, 2, 20);
+                player = allPlayers.get(4);
+                //player = new Rogue("Arya Stark", 150, 40, 2, 20);
                 break;
             case 6:
-                player = new Rogue("Bronn",250, 35, 2, 50);
+                player = allPlayers.get(5);
+                //player = new Rogue("Bronn",250, 35, 2, 50);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + playerNum);

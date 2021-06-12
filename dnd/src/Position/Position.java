@@ -34,13 +34,17 @@ public class Position {
          switch(goTo){
             case 'w':
                 p = new Position(x , y - 1);
+                break;
             case 's':
                 p = new Position(x, y + 1);
-            case 'a':
+                break;
+             case 'a':
                  p = new Position(x - 1, y );
-            case 'd':
+                 break;
+             case 'd':
                  p = new Position(x + 1, y);
-        }
+                 break;
+         }
         return p;
     }
 
@@ -58,5 +62,20 @@ public class Position {
 
     public int getIndex(int width) {
          return x + y * width;
+    }
+
+
+    public int compareTo(Position p) {
+         if(getY() > p.getY())
+             return 1;
+         else if(getY() < p.getY())
+             return -1;
+         else{
+             if(getX() > p.getX())
+                 return 1;
+             else if(getX() < p.getX())
+                 return -1;
+         }
+         return 0;
     }
 }

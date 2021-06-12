@@ -24,9 +24,10 @@ public class Rogue extends Player{
 
 
     @Override
-    public void uniquelevelUp() {
+    public void levelUp() {
+        super.levelUp();
         currEnergy = 100;
-        setAttack(3 * level);
+        setAttack(3 * getLevel());
     }
 
     @Override
@@ -40,10 +41,11 @@ public class Rogue extends Player{
         currEnergy -= cost;
         //List enemiesInRange = searchForEnemies(2);
         //for( Enemy enemy : enemiesInRange ) {
-        //  they can try to defend themselves
-        //  enemy.setHealthPool( -attack );   // Enemy healthAmount is decreased by warrior healthAmount*0.1
+        //int damageDone = Math.max(attack, u.Defend());
+        // if (damageDone == attack)
+            //enemy.setHealthPool( -attack );
         //}
-        setHealthAmount(10 * defense);
+        setHealthAmount(10 * getDefense());
     }
 
     @Override

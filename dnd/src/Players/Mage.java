@@ -33,7 +33,7 @@ public class Mage extends Player {
     }
 
     public void gameTick(){
-        currentMana = Math.min(manaPool, currentMana + 1 * level) ;
+        currentMana = Math.min(manaPool, currentMana + 1 * getLevel()) ;
     }
 
 
@@ -42,23 +42,28 @@ public class Mage extends Player {
         Random rand = new Random();
         currentMana = currentMana - manaCost;
         int hits = 0;
+        // Where do I get the list of enemies from the board
         //List enemiesInRange = searchForEnemies(abilityRange);
         while (hits < hitsCount /* &  enemiesInRange.length > 0 */ ) {  // ∧ (∃ living enemy s.t. range(enemy, player) < ability range) do
             //Enemy enemy = enemiesInRange.get(rand.nextInt(enemiesInRange.size()));
-            //(each enemy may try to defend itself).
-            //enemy.setHealthPool( -spellPower );
+            //int damageDone = Math.max(spellPower, u.Defend());
+            // if (damageDone == spellPower)
+                //enemy.setHealthPool( -spellPower );
             hits += 1;
         }
 
     }
 
     @Override
-    public void uniquelevelUp() {
-        manaPool = manaPool + (25 * level);
+    public void levelUp() {
+        super.levelUp();
+        manaPool = manaPool + (25 * getLevel());
         currentMana = Math.min(currentMana + manaPool/4, manaPool);
-        spellPower = spellPower + (10 * level);
+        spellPower = spellPower + (10 * getLevel());
 
     }
+
+
 
     @Override
     public String describe() {

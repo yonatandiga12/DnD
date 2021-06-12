@@ -3,7 +3,7 @@ package Tile;
 import Position.Position;
 import Units.Unit;
 
-public abstract class Tile {
+public abstract class Tile implements Comparable<Tile> {
 
     protected Position position;
     protected char sign;
@@ -29,4 +29,9 @@ public abstract class Tile {
     }
 
     public abstract void accept(Unit unit);
+
+    @Override
+    public int compareTo(Tile tile) {
+        return getPosition().compareTo(tile.getPosition());
+    }
 }

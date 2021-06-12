@@ -17,9 +17,21 @@ public class Empty extends Tile{
         //initialize(position);
     }
 
+
+    //only When player dies
+    public Empty(Position position, char Sign) {
+        super(Sign);
+        this.position = position;
+    }
+
     @Override
     public void accept(Unit u){
         u.visit(this);
+    }
+
+    @Override
+    public int compareTo(Tile o) {
+        return this.position.compareTo(o.getPosition());
     }
 
     /*

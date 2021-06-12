@@ -21,6 +21,7 @@ public class LevelInitializer {
     private Player player;
     protected Board board;
     private String[] levelsPaths;
+    private GameLevel gameLevel;
 
 
     public LevelInitializer(String path, Player player){
@@ -33,7 +34,7 @@ public class LevelInitializer {
     //read the lvl.txt file and create a level, using the
     public GameLevel initGameLevel(int lvlNum){
         board = loadLevel(lvlNum);
-        GameLevel gameLevel = new GameLevel(board);
+        gameLevel = new GameLevel(board);
         return gameLevel;
     }
 
@@ -59,6 +60,7 @@ public class LevelInitializer {
         int width = listofFile.get(0).length();
         int height = listofFile.size();
         board = new Board(height, width);
+
         for(int row = 0; row < height ; row ++ ){
             for(int col = 0; col < width ; col ++ ) {
                 Position p = new Position(col, row);
@@ -69,12 +71,15 @@ public class LevelInitializer {
                     board.add(new Empty(p));
                 else if (currLetter == '@'){
                     board.add(player);
-                    player.initialize(p, null, null, null);}
+                    player.setDeathCallback( () -> gameLevel.removePlayer());
+                    player.setMessageCallBack((msg) -> System.out.println(msg));
+                    player.initialize(p, null, null, null);
+                }
                 else {
                     Enemy e = findEnemyType(currLetter);
                     e.initialize(p,null,null,null);
-                    // e.setDeathCallBack( () -> m.removeEnemy(e));
-                    // e.setMessageCallBack( (msg) -> System.out.prinlt(msg));
+                    e.setDeathCallback( () -> gameLevel.removeEnemy(e));
+                    e.setMessageCallBack( (msg) -> System.out.println(msg));
                     board.add(e);
                 }
             }
@@ -91,43 +96,43 @@ public class LevelInitializer {
         Enemy enemy;
         switch(currLetter){
             case 's':
-                enemy = new Monster("Lannister Solider", 's', 80, 8, 3, 25, 3);
+                enemy = new Monster("Lannister Solider", 's', 80, 8, 3, 25, 3, player);
                 break;
             case 'k':
-                enemy = new Monster("Lannister Knight", 'k', 200, 14, 8, 50, 4);
+                enemy = new Monster("Lannister Knight", 'k', 200, 14, 8, 50, 4, player);
                 break;
             case 'q':
-                enemy = new Monster("Queen’s Guard", 'q', 400, 20, 15, 100, 5);
+                enemy = new Monster("Queen’s Guard", 'q', 400, 20, 15, 100, 5, player);
                 break;
             case 'z':
-                enemy = new Monster("Wright", 'z', 600, 30, 15, 100, 3);
+                enemy = new Monster("Wright", 'z', 600, 30, 15, 100, 3, player);
                 break;
             case 'b':
-                enemy = new Monster("Bear-Wright", 'b', 1000, 75, 30, 250, 4);
+                enemy = new Monster("Bear-Wright", 'b', 1000, 75, 30, 250, 4, player);
                 break;
             case 'g':
-                enemy = new Monster("Giant-Wright", 'g', 1500, 100, 40, 500, 5);
+                enemy = new Monster("Giant-Wright", 'g', 1500, 100, 40, 500, 5, player);
                 break;
             case 'w':
-                enemy = new Monster("White Walker", 'w', 2000, 150, 50, 1000, 6);
+                enemy = new Monster("White Walker", 'w', 2000, 150, 50, 1000, 6, player);
                 break;
             case 'M':
-                enemy = new Monster("The Mountain", 'M', 1000, 60, 25, 500, 6);
+                enemy = new Monster("The Mountain", 'M', 1000, 60, 25, 500, 6, player);
                 break;
             case 'C':
-                enemy = new Monster("Queen Cersei", 'C', 100, 10, 10, 1000, 1);
+                enemy = new Monster("Queen Cersei", 'C', 100, 10, 10, 1000, 1, player);
                 break;
             case 'K':
-                enemy = new Monster("Night’s King", 'K', 5000, 300, 150, 5000, 8);
+                enemy = new Monster("Night’s King", 'K', 5000, 300, 150, 5000, 8, player);
                 break;
             case 'B':
-                enemy = new Trap("Bonus Trap", 'B', 1, 1, 1, 250, 1, 5);
+                enemy = new Trap("Bonus Trap", 'B', 1, 1, 1, 250, 1, 5, player);
                 break;
             case 'Q':
-                enemy = new Trap("Queen’s Trap", 'Q', 250, 50, 10, 100, 3, 7);
+                enemy = new Trap("Queen’s Trap", 'Q', 250, 50, 10, 100, 3, 7, player);
                 break;
             case 'D':
-                enemy = new Trap("Death Trap", 'D',500,100,20,250,1,10);
+                enemy = new Trap("Death Trap", 'D',500,100,20,250,1,10, player);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + currLetter);

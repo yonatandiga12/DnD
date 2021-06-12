@@ -1,15 +1,15 @@
 package Enemies;
 
-import Interfaces.InputProvider;
-import Interfaces.MessageCallback;
-import Interfaces.PlayerDeathCallback;
+import Interfaces.*;
 import Players.Player;
 import Position.Position;
 import Units.Unit;
 
 public abstract class Enemy extends Unit {
 
-    private PlayerDeathCallback deathCallback;
+    private EnemyDeathCallback EnemydeathCallback;
+    //private PlayerDeathCallback PlayerdeathCallback;
+
     private InputProvider inputProvider;
 
 
@@ -20,7 +20,7 @@ public abstract class Enemy extends Unit {
 
     public Enemy initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider){
         super.initialize(position, messageCallback);
-        this.deathCallback = deathCallback;
+        //this.PlayerdeathCallback = deathCallback;
         this.inputProvider = inputProvider;
         return this;
     }
@@ -40,13 +40,23 @@ public abstract class Enemy extends Unit {
 
     @Override
     public void visit(Player p){
-        // when the enemy visits player
+        // when the enemy visits player need to fill this
     }
 
 
+    public void onDeath() {
+        EnemydeathCallback.call();
+    }
 
+    public void setDeathCallback(EnemyDeathCallback edc){
+        this.EnemydeathCallback = edc;
+    }
+
+    public void setMessageCallBack(MessageCallback m){
+        this.messageCallback = m;
+    }
 
     public String describe() {
-        return name + "     " + "Health: " + healthAmount + "/" + healthPool + "     " + "Attack: " + attack + "     " + "Defense: " + defense + "     " + "Experience value: " + experience ;
+        return super.describe() + "     " + "Experience value: " + experience ;
     }
 }

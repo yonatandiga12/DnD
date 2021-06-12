@@ -1,4 +1,5 @@
 import Enemies.Enemy;
+import Interfaces.changePositionInBoard;
 import Players.Player;
 import Position.Position;
 import Tile.Tile;
@@ -8,6 +9,7 @@ import Units.Unit;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -43,8 +45,9 @@ public class Board {
         enemiesList.add(e);
     }
 
-    public void remove(Enemy e)
+    public void removeEnemy(Enemy e)
     {
+        Collections.sort(tiles);
         tiles.set(getIndex(e), new Empty(e.getPosition()));
         enemiesList.remove(e);
     }
@@ -75,6 +78,8 @@ public class Board {
     }
 
     public String toString(){
+        Collections.sort(tiles);
+
         String output = "";
         int index = 0;
         for(int i = 0; i < height; i++){
@@ -86,6 +91,10 @@ public class Board {
         }
 
         return output;
+    }
+
+    public void removePlayer() {
+        tiles.set(getIndex(player), new Empty(player.getPosition(),'X'));
     }
 
 }
