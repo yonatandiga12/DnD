@@ -20,7 +20,6 @@ public abstract class Enemy extends Unit {
 
     public Enemy initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider){
         super.initialize(position, messageCallback);
-        //this.PlayerdeathCallback = deathCallback;
         this.inputProvider = inputProvider;
         return this;
     }

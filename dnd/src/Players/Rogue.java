@@ -25,9 +25,14 @@ public class Rogue extends Player{
 
     @Override
     public void levelUp() {
+        int prevAttack = getAttack();
+        int prevHealth = getHealthPool();
+        int prevDefense = getDefense();
         super.levelUp();
         currEnergy = 100;
         setAttack(3 * getLevel());
+        messageCallback.send(String.format("%s reached level %d: +%d Health, +%d Attack, +%d Defense",getName(), getLevel(), getHealthPool() - prevHealth, getAttack() - prevAttack, getDefense() - prevDefense ));
+
     }
 
     @Override

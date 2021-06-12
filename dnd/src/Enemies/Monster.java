@@ -36,7 +36,6 @@ public class Monster extends Enemy {
             int dy = this.getPosition().getY() - player.getPosition().getY();
             if(Math.abs(dx) > Math.abs(dy)){
                 if(dx > 0){
-
                     //MoveLeft();
                 } else{
                     //MoveRight();

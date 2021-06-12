@@ -31,8 +31,8 @@ public abstract class Player extends Unit {
 
 
     public void setExperience(int num) {
-        experience += (num);
-        if(experience >= experienceCapacity){
+        super.setExperience(num);
+        if(getExperience() >= experienceCapacity){
             this.levelUp();
         }
     }
@@ -51,16 +51,11 @@ public abstract class Player extends Unit {
     public void setLevel() {
         level += 1;
     }
-    public void setHealthPool(int num){
-        healthPool += num* level;
-    }
 
     public void setExperienceCapacity(){
         experienceCapacity = level* 50;
     }
-    public int getExperience(){
-        return experience;
-    }
+
 
 
     public abstract void castAbility();
@@ -69,13 +64,11 @@ public abstract class Player extends Unit {
         setExperience(-getExperience());   // experience ← experience − (50 × level)
         setLevel();
         setExperienceCapacity();
-        setHealthPool(10);
+        setHealthPool(10 * getLevel());
         setCurrentHealth();               // current health ← health pool
         setAttack(4 * getLevel());              // attack ← attack + (4 × level)
         setDefense(2 * getLevel());             // defense ← defense + (1 × level)
     }
-
-    //public abstract void uniquelevelUp();
 
     public abstract void gameTick();
 
@@ -85,7 +78,7 @@ public abstract class Player extends Unit {
     }
 
     public String describe() {
-        return super.describe() + "     " + "Level: " + level  + "     " + "Experience: " + experience + "/" + experienceCapacity;
+        return super.describe() + "     " + "Level: " + level  + "     " + "Experience: " + getExperience() + "/" + experienceCapacity;
     }
 
     @Override
@@ -101,7 +94,6 @@ public abstract class Player extends Unit {
         int experienceGained = e.getExperience();
         messageCallback.send(String.format("%s died. %s gained %d experience.", e.getName(), getName(), experienceGained));
         setExperienceAfterKill(experienceGained);
-        //setExperience(experienceGained);
         e.onDeath();
     }
 

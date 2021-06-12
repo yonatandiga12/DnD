@@ -33,16 +33,16 @@ public class Position {
         Position p = this;
          switch(goTo){
             case 'w':
-                p = new Position(x , y - 1);
+                p = getUpPosition();
                 break;
             case 's':
-                p = new Position(x, y + 1);
+                p = getDownPosition();
                 break;
              case 'a':
-                 p = new Position(x - 1, y );
+                 p = getLeftPosition();
                  break;
              case 'd':
-                 p = new Position(x + 1, y);
+                 p = getRightPosition();
                  break;
          }
         return p;
@@ -54,6 +54,19 @@ public class Position {
     public int getY() {
         return y;
     }
+    public Position getUpPosition(){
+        return new Position(x , y - 1);
+    }
+    public Position getDownPosition(){
+        return new Position(x, y + 1);
+    }
+    public Position getLeftPosition(){
+        return new Position(x - 1, y );
+    }
+    public Position getRightPosition(){
+        return new Position(x + 1, y);
+    }
+
 
     public String toString(){
         return "(" + x + "," + y + ")";

@@ -84,38 +84,41 @@ public abstract class Unit extends Tile {
     public int getExperience(){
         return experience;
     }
+    public void setExperience(int num) {
+        experience += (num);
+    }
     public int getHealthPool(){
         return healthPool;
+    }
+    public void setHealthPool(int num){
+        healthPool += num;
     }
 
     public int getHealthAmount(){
         return healthAmount;
-    }
-
-    public int getAttack(){
-        return attack;
-    }
-
-    public int getDefense(){
-        return defense;
-    }
-
-    public void setAttack(int num) {
-        attack += (num);
-    }
-
-    public void setDefense(int num) {
-        defense += (num);
-    }
-
-    public void setCurrentHealth() {
-        healthAmount = healthPool;
     }
     public void setHealthAmount(int num) {
         if (healthAmount + (num) <= healthPool)
             healthAmount += (num);
         healthAmount = Math.max(healthAmount, 0);
     }
+
+    public int getAttack(){
+        return attack;
+    }
+    public void setAttack(int num) {
+        attack += (num);
+    }
+    public int getDefense(){
+        return defense;
+    }
+    public void setDefense(int num) {
+        defense += (num);
+    }
+    public void setCurrentHealth() {
+        healthAmount = healthPool;
+    }
+
 
 
     public String describe() {

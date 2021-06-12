@@ -56,10 +56,18 @@ public class Mage extends Player {
 
     @Override
     public void levelUp() {
+        int prevAttack = getAttack();
+        int prevHealth = getHealthPool();
+        int prevDefense = getDefense();
+        int prevManaPool = manaPool;
+        int prevSpell = spellPower;
         super.levelUp();
         manaPool = manaPool + (25 * getLevel());
         currentMana = Math.min(currentMana + manaPool/4, manaPool);
         spellPower = spellPower + (10 * getLevel());
+        messageCallback.send(String.format("%s reached level %d: +%d Health, +%d Attack, +%d Defense",getName(), getLevel(), getHealthPool() - prevHealth, getAttack() - prevAttack, getDefense() - prevDefense ));
+        //                +50 maximum mana, +20 spell power
+        messageCallback.send(String.format("                            +%d maximum mana, +%d spell power", manaPool - prevManaPool, spellPower - prevSpell ));
 
     }
 
