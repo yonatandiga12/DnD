@@ -5,7 +5,13 @@ import Interfaces.InputProvider;
 import Interfaces.MessageCallback;
 import Interfaces.PlayerDeathCallback;
 import Position.Position;
+import Tile.Tile;
 import Units.Unit;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public abstract class Player extends Unit {
 
     private PlayerDeathCallback deathCallback;
@@ -58,7 +64,7 @@ public abstract class Player extends Unit {
 
 
 
-    public abstract void castAbility();
+    public abstract void castAbility(List<Enemy> enemies);
 
     public void levelUp() {
         setExperience(-getExperience());   // experience ← experience − (50 × level)
@@ -67,7 +73,7 @@ public abstract class Player extends Unit {
         setHealthPool(10 * getLevel());
         setCurrentHealth();               // current health ← health pool
         setAttack(4 * getLevel());              // attack ← attack + (4 × level)
-        setDefense(2 * getLevel());             // defense ← defense + (1 × level)
+        setDefense(1 * getLevel());             // defense ← defense + (1 × level)
     }
 
     public abstract void gameTick();
@@ -117,6 +123,17 @@ public abstract class Player extends Unit {
     @Override
     public void visit(Player p){
         // do nothing cant be 2 players in the game
+    }
+
+    /**
+     This method returns a list of all the units close by.
+     **/
+    public List<Enemy> searchForEnemies(int range, List<Enemy> enemiesList){
+
+        Stream<Enemy> output = enemiesList.stream().filter((u) -> getPosition().getRange(u.getPosition(), getPosition()) <= range );
+        //List<Enemy> enemies = output.collect(Collectors.toList());
+
+        return output.collect(Collectors.toList());
     }
 
 }

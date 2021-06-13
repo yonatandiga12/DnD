@@ -61,13 +61,13 @@ public abstract class Unit extends Tile {
         messageCallback.send(String.format("%s dealt %d damage to %s",getName(), damageDone, u.getName()));
     }
 
-    private int Defend() {
+    public int Defend() {
         int result = r.nextInt(defense);
         messageCallback.send(String.format("%s rolled %d defense points.",getName(), result));
         return result;
     }
 
-    private int Attack() {
+    public int Attack() {
         int result = r.nextInt(attack);
         messageCallback.send(String.format("%s rolled %d attack points.",getName(), result));
         return result;

@@ -1,9 +1,12 @@
 package Players;
 
+import Enemies.Enemy;
 import Interfaces.InputProvider;
 import Interfaces.MessageCallback;
 import Interfaces.PlayerDeathCallback;
 import Position.Position;
+
+import java.util.List;
 
 public class Rogue extends Player{
 
@@ -42,15 +45,24 @@ public class Rogue extends Player{
 
 
     @Override
-    public void castAbility() {
+    public void castAbility(List<Enemy> enemies) {
+        if(currEnergy < cost)
+            return;
+        messageCallback.send(String.format("%s cast %s.",getName(), ability));
+        //Arya Stark hit Queen's Trap for 174 ability damage.
         currEnergy -= cost;
-        //List enemiesInRange = searchForEnemies(2);
-        //for( Enemy enemy : enemiesInRange ) {
-        //int damageDone = Math.max(attack, u.Defend());
-        // if (damageDone == attack)
-            //enemy.setHealthPool( -attack );
-        //}
-        setHealthAmount(10 * getDefense());
+        List<Enemy> enemiesInRange = searchForEnemies(2, enemies);
+        for( Enemy enemy : enemiesInRange ) {
+            int damageDone = Math.max(getAttack(), enemy.Defend());
+            if (damageDone == getAttack()) {
+                enemy.setHealthAmount(-getAttack());
+                messageCallback.send(String.format("%s hit %s for %d ability damage.",getName(), enemy.getName(), getAttack()));
+                if(!enemy.alive()){
+                    onKill(enemy);
+                }
+
+            }
+        }
     }
 
     @Override

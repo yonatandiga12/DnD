@@ -1,10 +1,12 @@
 package Players;
 
+import Enemies.Enemy;
 import Interfaces.InputProvider;
 import Interfaces.MessageCallback;
 import Interfaces.PlayerDeathCallback;
 import Position.Position;
 
+import java.util.List;
 import java.util.Random;
 
 public class Mage extends Player {
@@ -38,17 +40,29 @@ public class Mage extends Player {
 
 
     @Override
-    public void castAbility() {
+    public void castAbility(List<Enemy> enemies) {
         Random rand = new Random();
+        if(currentMana < manaCost) {
+            //Melisandre tried to cast Blizzard, but there was not enough mana: 9/30.
+            messageCallback.send(String.format("%s tried to cast %s, but there was not enough mana: %d/%d.",getName(), ability, manaCost, manaPool));
+
+            return;
+        }
+        messageCallback.send(String.format("%s cast %s.",getName(), ability));
+
         currentMana = currentMana - manaCost;
         int hits = 0;
-        // Where do I get the list of enemies from the board
-        //List enemiesInRange = searchForEnemies(abilityRange);
-        while (hits < hitsCount /* &  enemiesInRange.length > 0 */ ) {  // ∧ (∃ living enemy s.t. range(enemy, player) < ability range) do
-            //Enemy enemy = enemiesInRange.get(rand.nextInt(enemiesInRange.size()));
-            //int damageDone = Math.max(spellPower, u.Defend());
-            // if (damageDone == spellPower)
-                //enemy.setHealthPool( -spellPower );
+        List<Enemy> enemiesInRange = searchForEnemies(abilityRange, enemies);
+        while (hits < hitsCount  &  enemiesInRange.size() > 0  ) {  // ∧ (∃ living enemy s.t. range(enemy, player) < ability range) do
+            Enemy enemy = enemiesInRange.get(rand.nextInt(enemiesInRange.size()));
+            int damageDone = Math.max(spellPower, enemy.Defend());
+             if (damageDone == spellPower) {
+                 enemy.setHealthAmount(-spellPower);
+                 messageCallback.send(String.format("%s hit %s for %d ability damage.",getName(), enemy.getName(), spellPower));
+             }
+             if(!enemy.alive()){
+                 onKill(enemy);
+            }
             hits += 1;
         }
 

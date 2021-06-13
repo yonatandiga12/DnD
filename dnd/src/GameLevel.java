@@ -28,7 +28,7 @@ public class GameLevel {
             player.gameTick();
         }
         else if( letter == 'e'){
-            player.castAbility();
+            player.castAbility(enemies);
         }
         else if( letter == 'q'){
             //do nothing;
@@ -40,8 +40,6 @@ public class GameLevel {
         for(Enemy e : enemies){
             //e.interact();
         }
-
-        player.messageCallback.send("Player position : " + player.getPosition());
 
         player.messageCallback.send(player.describe());
         player.messageCallback.send(board.toString());

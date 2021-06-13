@@ -33,6 +33,7 @@ public class Trap extends Enemy{
             ticksCount = 0;
         else {
             ticksCount += 1;
+            // go to player field and check its position and calculate range
             // Player player = SearchForPlayer(2);
             //if ( player != null )
             //    battle(player);
