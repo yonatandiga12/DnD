@@ -5,12 +5,14 @@ import Interfaces.MessageCallback;
 import Interfaces.PlayerDeathCallback;
 import Players.Player;
 import Position.Position;
+import Tile.Tile;
 
+import java.util.Dictionary;
 import java.util.Random;
 
 public class Monster extends Enemy {
 
-    Random rand;
+    Random rand = new Random();
     public char tile;
     public int experienceValue;
     public int visionRange;
@@ -31,54 +33,64 @@ public class Monster extends Enemy {
 
     @Override
     public void gameTick() {
-        //if(range(this, player)<visionRange){
-            int dx = this.getPosition().getX() - player.getPosition().getX();
-            int dy = this.getPosition().getY() - player.getPosition().getY();
-            if(Math.abs(dx) > Math.abs(dy)){
-                if(dx > 0){
-                    //MoveLeft();
-                } else{
-                    //MoveRight();
-                } }
-            else{
-                if(dy > 0){
-                    //MoveUp();
-                } else{
-                    //MoveDown();
-                } }
-        //}
-        //else{
-            chooseRandomMovement();
-        //}
 
-        //continue here:
-        // If the monster founds the player than battle him
-        // interact(Tile I am going to)
     }
 
-    private void chooseRandomMovement() {
-        switch(rand.nextInt(4)){
+    private Tile chooseRandomMovement(Dictionary<String, Tile> surroundingTiles) {
+        Tile t;
+        switch (rand.nextInt(4)) {
             case 0:
-                //MoveLeft();
+                t = surroundingTiles.get("Left");
                 break;
             case 1:
-                //MoveRight();
+                t = surroundingTiles.get("Right");
                 break;
             case 2:
-                //MoveUp();
+                t = surroundingTiles.get("Up");
                 break;
             case 3:
-                //MoveDown();
+                t = surroundingTiles.get("Down");
                 break;
             case 4:
-                //Don'tMove
+                t = this;
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + rand.nextInt(4));
         }
+        return t;
     }
 
 
     public String describe() {
         return super.describe() + "     " + "Vision Range: " + visionRange;
     }
+
+    @Override
+    public Tile ChooseAction(Dictionary<String, Tile> surroundingTiles) {
+        if (position.getRange(getPosition(), player.getPosition()) < visionRange) {
+            int dx = this.getPosition().getX() - player.getPosition().getX();
+            int dy = this.getPosition().getY() - player.getPosition().getY();
+            if (Math.abs(dx) > Math.abs(dy)) {
+                if (dx > 0) {
+                    return surroundingTiles.get("Left");
+                }
+                else {
+                    return surroundingTiles.get("Right");
+                }
+            }
+            else {
+                if (dy > 0) {
+                    return surroundingTiles.get("Up");
+                }
+                else {
+                    return surroundingTiles.get("Down");
+                }
+            }
+        }
+        else {
+            return chooseRandomMovement(surroundingTiles);
+        }
+    }
+
 
 }

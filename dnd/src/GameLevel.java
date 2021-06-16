@@ -1,6 +1,5 @@
 import Enemies.Enemy;
 import Players.Player;
-import Players.Warrior;
 import Tile.*;
 
 
@@ -22,39 +21,44 @@ public class GameLevel {
     }
 
     public void runTick(char letter){
+        boolean castAbilityWorked = true;
         if(letter == 'w' | letter == 'a' | letter == 's' | letter == 'd'){
             Tile t = board.getTileInPosition(player.getPosition().getInteractionPosition(letter));
             player.interact(t);
             player.gameTick();
         }
         else if( letter == 'e'){
-            player.castAbility(enemies);
+            castAbilityWorked = player.castAbility(enemies);
         }
         else if( letter == 'q'){
-            //do nothing;
+            player.gameTick();
         }
         else{
             return;
         }
-
-        for(Enemy e : enemies){
-            //e.interact();
+        if(castAbilityWorked) {
+            for (Enemy e : enemies) {
+                board.updateMap();
+                var x = board.getSurroundingTiles(e.getPosition());
+                Tile t = e.ChooseAction(board.getSurroundingTiles(e.getPosition()));
+                if (t != null)
+                    e.interact(t);
+            }
         }
 
-        player.messageCallback.send(player.describe());
         player.messageCallback.send(board.toString());
+        player.messageCallback.send(player.describe());
+
 
     }
 
     //called when the player dies
     public void onPlayerDeath(){
+        board.removePlayer();
+        player.setHealthAmount(-player.getHealthAmount()); // death!
 
     }
 
-    //called when enemy dies
-    public void onEnemyDeath(Enemy e){
-
-    }
 
     //level string representation
     @Override
@@ -67,7 +71,15 @@ public class GameLevel {
         board.removeEnemy(e);
     }
 
-    public void removePlayer() {
-        board.removePlayer();
+    public boolean isPlayerAlive() {
+        return player.alive();
+    }
+
+    public boolean isEndOfLevel(){
+        return enemies.size() == 0;
+    }
+
+    public int getNumOfEnemies() {
+        return enemies.size();
     }
 }

@@ -40,16 +40,14 @@ public class Mage extends Player {
 
 
     @Override
-    public void castAbility(List<Enemy> enemies) {
+    public boolean castAbility(List<Enemy> enemies) {
         Random rand = new Random();
         if(currentMana < manaCost) {
             //Melisandre tried to cast Blizzard, but there was not enough mana: 9/30.
             messageCallback.send(String.format("%s tried to cast %s, but there was not enough mana: %d/%d.",getName(), ability, manaCost, manaPool));
-
-            return;
+            return false;
         }
         messageCallback.send(String.format("%s cast %s.",getName(), ability));
-
         currentMana = currentMana - manaCost;
         int hits = 0;
         List<Enemy> enemiesInRange = searchForEnemies(abilityRange, enemies);
@@ -65,6 +63,7 @@ public class Mage extends Player {
             }
             hits += 1;
         }
+        return true;
 
     }
 

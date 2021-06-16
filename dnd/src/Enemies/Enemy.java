@@ -3,7 +3,10 @@ package Enemies;
 import Interfaces.*;
 import Players.Player;
 import Position.Position;
+import Tile.Tile;
 import Units.Unit;
+
+import java.util.Dictionary;
 
 public abstract class Enemy extends Unit {
 
@@ -39,7 +42,10 @@ public abstract class Enemy extends Unit {
 
     @Override
     public void visit(Player p){
-        // when the enemy visits player need to fill this
+        super.battle(p);
+        if(!p.alive()){
+            p.onDeath();
+        }
     }
 
 
@@ -58,4 +64,6 @@ public abstract class Enemy extends Unit {
     public String describe() {
         return super.describe() + "     " + "Experience value: " + experience ;
     }
+
+    public abstract Tile ChooseAction(Dictionary<String,Tile> surroundingTiles);
 }

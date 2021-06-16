@@ -64,7 +64,7 @@ public abstract class Player extends Unit {
 
 
 
-    public abstract void castAbility(List<Enemy> enemies);
+    public abstract boolean castAbility(List<Enemy> enemies);
 
     public void levelUp() {
         setExperience(-getExperience());   // experience ← experience − (50 × level)

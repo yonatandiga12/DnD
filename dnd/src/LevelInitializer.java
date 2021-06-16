@@ -2,6 +2,7 @@ import Enemies.Enemy;
 import Enemies.Monster;
 import Enemies.Trap;
 import Interfaces.InputProvider;
+import Interfaces.MessageCallback;
 import Interfaces.PlayerDeathCallback;
 import Players.*;
 import Position.Position;
@@ -22,6 +23,8 @@ public class LevelInitializer {
     protected Board board;
     private String[] levelsPaths;
     private GameLevel gameLevel;
+    public MessageCallback messageCallback;
+
 
 
     public LevelInitializer(String path, Player player){
@@ -34,6 +37,9 @@ public class LevelInitializer {
     //read the lvl.txt file and create a level, using the
     public GameLevel initGameLevel(int lvlNum){
         board = loadLevel(lvlNum);
+
+        messageCallback.send(board.toString());
+
         gameLevel = new GameLevel(board);
         return gameLevel;
     }
@@ -71,7 +77,7 @@ public class LevelInitializer {
                     board.add(new Empty(p));
                 else if (currLetter == '@'){
                     board.add(player);
-                    player.setDeathCallback( () -> gameLevel.removePlayer());
+                    player.setDeathCallback( () -> gameLevel.onPlayerDeath());
                     player.setMessageCallBack((msg) -> System.out.println(msg));
                     player.initialize(p, null, null, null);
                 }
@@ -159,4 +165,11 @@ public class LevelInitializer {
     }
 
 
+    public int getNumOfLevels() {
+        return levelsPaths.length;
+    }
+
+    public void setMessageCallBack(MessageCallback m){
+        this.messageCallback = m;
+    }
 }

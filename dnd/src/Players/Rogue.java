@@ -45,9 +45,9 @@ public class Rogue extends Player{
 
 
     @Override
-    public void castAbility(List<Enemy> enemies) {
+    public boolean castAbility(List<Enemy> enemies) {
         if(currEnergy < cost)
-            return;
+            return false;
         messageCallback.send(String.format("%s cast %s.",getName(), ability));
         //Arya Stark hit Queen's Trap for 174 ability damage.
         currEnergy -= cost;
@@ -63,6 +63,7 @@ public class Rogue extends Player{
 
             }
         }
+        return true;
     }
 
     @Override

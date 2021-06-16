@@ -5,6 +5,9 @@ import Interfaces.MessageCallback;
 import Interfaces.PlayerDeathCallback;
 import Players.Player;
 import Position.Position;
+import Tile.Tile;
+
+import java.util.Dictionary;
 
 public class Trap extends Enemy{
 
@@ -33,11 +36,24 @@ public class Trap extends Enemy{
             ticksCount = 0;
         else {
             ticksCount += 1;
-            // go to player field and check its position and calculate range
-            // Player player = SearchForPlayer(2);
-            //if ( player != null )
-            //    battle(player);
+            if(getPosition().getRange(player.getPosition(), getPosition()) < 2)
+                visit(player);
         }
+    }
+
+    @Override
+    public char toChar(){
+        if(visible)
+            return sign;
+        else
+            return '.';
+    }
+
+
+    @Override
+    public Tile ChooseAction(Dictionary<String, Tile> surroundingTiles) {
+        gameTick();
+        return null;
     }
 
 

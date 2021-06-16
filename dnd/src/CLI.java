@@ -10,13 +10,14 @@ public class CLI {
 
         //C:\בן גוריון\סמסטר ב\מונחה עצמים\Project3\levels_dirC:\Users\dyota\Desktop\מונחה עצמים\git\dnd\levels_dir
         //GameManager gameManager = new GameManager( "C:\\Users\\dyota\\Desktop\\מונחה עצמים\\git\\dnd\\levels_dir", 3 ); // insert the location
-        GameManager gameManager = new GameManager( "C:\\בן גוריון\\סמסטר ב\\מונחה עצמים\\Project3\\levels_dir", 3); // insert the location
+        GameManager gameManager = new GameManager( "C:\\בן גוריון\\סמסטר ב\\מונחה עצמים\\Project3\\levels_dir", 1); // insert the location
 
 
         Scanner scan = new Scanner(System.in);
-        while(true) {
+        while(gameManager.isGameActive()) {
             String letter = scan.nextLine();
             gameManager.doAction(letter);
+
         }
 
     }

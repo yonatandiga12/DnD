@@ -1,5 +1,6 @@
 import Enemies.Enemy;
 import Interfaces.InputProvider;
+import Interfaces.MessageCallback;
 import Players.Mage;
 import Players.Player;
 import Players.Rogue;
@@ -19,63 +20,50 @@ public class GameManager {
     private GameLevel gameLevel;
     private Player player;
     private List<Player> allPlayers;
+    private MessageCallback messageCallback;
 
     //public Board board;
     //public Player player;
     //private List<Enemy> enemiesList = new ArrayList<>();
 
     public GameManager(String path, int chosenPlayer) {
+
         player = startGameAndChoosePlayer(chosenPlayer);
+        setMessageCallBack((msg) -> System.out.println(msg));
         levelInitializer = new LevelInitializer(path, player);
+        levelInitializer.setMessageCallBack((msg) -> System.out.println(msg));
 
-
-       // while(gameIsActive()){
-       //     gameLevel = levelInitializer.initGameLevel(currLevel);
-       // }
-
+        messageCallback.send(String.format("Select Player: \n%s", printAllPlayers()));
+        messageCallback.send(String.format("You have selected: \n%s", player));
         gameLevel = levelInitializer.initGameLevel(currLevel);
-        System.out.println("Printing in GameManager");
-        System.out.println("You chose :  " + player.describe());
-        System.out.println(player.getPosition());
-        System.out.println(levelInitializer.board);
-        System.out.println("please choose your action: ('a'/'d'/'s'/'w'/'e'/'q')");
+
     }
 
 
     public void doAction(String l) {
-        if(l.length() != 0){
+        if(l.length() == 1){
             gameLevel.runTick(l.charAt(0)); //or run all level
 
+            System.out.println("Enemies left : " + gameLevel.getNumOfEnemies());
+
+            if(gameLevel.isEndOfLevel()){
+                if(currLevel < levelInitializer.getNumOfLevels()){
+                    currLevel += 1;
+                    levelInitializer.initGameLevel(currLevel);
+
+                }
+                else{
+                    messageCallback.send("You Won");
+                }
+            }
         }
 
-
     }
 
 
-
-
-
-    private boolean gameIsActive() {
-        //check if player is not dead
-        // maybe add more things
-        return true;
+    public boolean isGameActive() {
+        return gameLevel.isPlayerAlive();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -132,14 +120,18 @@ public class GameManager {
 
 
 
-    public void printAllPlayers() {
-        String output = "Please choose a Player!\n";
+    public String printAllPlayers() {
+        String output = "";
+        int counter = 1;
         for (Player player : allPlayers) {
-            output = output + player.describe() + "\n";
+            output = output + counter + ". " + player.describe() + "\n";
+            counter += 1;
         }
-        System.out.println(output);
+        return output;
     }
 
-
+    public void setMessageCallBack(MessageCallback m){
+        this.messageCallback = m;
+    }
 
 }

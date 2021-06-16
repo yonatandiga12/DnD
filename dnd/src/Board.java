@@ -1,18 +1,11 @@
 import Enemies.Enemy;
-import Interfaces.changePositionInBoard;
 import Players.Player;
 import Position.Position;
 import Tile.Tile;
 import Tile.Empty;
 
-import Units.Unit;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Board {
 
@@ -47,9 +40,13 @@ public class Board {
 
     public void removeEnemy(Enemy e)
     {
-        Collections.sort(tiles);
+        updateMap();
         tiles.set(getIndex(e), new Empty(e.getPosition()));
         enemiesList.remove(e);
+    }
+
+    public void updateMap(){
+        Collections.sort(tiles);
     }
 
     public Tile getTileInPosition(Position p){
@@ -57,9 +54,8 @@ public class Board {
         return tiles.get(p.getX() + width * p.getY());
     }
 
-    /**
-     This method returns a list of all the units close by.
-     **/
+    /*
+
     public List<Enemy> searchForEnemies(int range, Tile currUnit){
 
         // Need to see where to put the list of all the tiles
@@ -71,6 +67,19 @@ public class Board {
 
         return enemies;
     }
+     */
+
+    public Dictionary<String, Tile> getSurroundingTiles(Position p){
+        Dictionary<String,Tile> output = new Hashtable<>();
+        output.put("Up", getTileInPosition(p.getUpPosition()) );
+        output.put("Down", getTileInPosition(p.getDownPosition()) );
+        output.put("Left", getTileInPosition(p.getLeftPosition()) );
+        output.put("Right", getTileInPosition(p.getRightPosition()) );
+        return output;
+    }
+
+
+
 
     private int getIndex(Tile t){
        Position p = t.getPosition();
@@ -78,7 +87,7 @@ public class Board {
     }
 
     public String toString(){
-        Collections.sort(tiles);
+        updateMap();
 
         String output = "";
         int index = 0;
@@ -89,7 +98,6 @@ public class Board {
             }
             output += "\n";
         }
-
         return output;
     }
 

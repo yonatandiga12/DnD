@@ -48,7 +48,7 @@ public class Warrior extends Player{
     }
 
     @Override
-    public void castAbility(List<Enemy> enemies) {
+    public boolean castAbility(List<Enemy> enemies) {
         Random rand = new Random();
         if(remainingCooldown == 0) {
             remainingCooldown = coolDown;
@@ -65,7 +65,9 @@ public class Warrior extends Player{
                      onKill(enemy);
                  }
             }
+             return true;
         }
+        return false;
     }
 
 
