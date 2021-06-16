@@ -120,12 +120,20 @@ public abstract class Unit extends Tile {
     }
 
 
-
     public String describe() {
-        return getName() + "     " + "Health: " + getHealthAmount()+ "/" + getHealthPool() + "     " + "Attack: " + getAttack()+ "     " + "Defense: " + getDefense();
+        return getName() + createSpaces(getName().length(), 18) + "Health: " + getHealthAmount()+ "/" + getHealthPool() + createSpaces(String.valueOf(getHealthAmount()).length() , 7) +
+                "Attack: " + getAttack()+ createSpaces(String.valueOf(getAttack()).length(), 7) + "Defense: " + getDefense();
     }
 
-
+    public String createSpaces(int nameLength, int maxLength ){
+        int additionalSpaces = maxLength - nameLength;
+        String output = "";
+        while(additionalSpaces > 0){
+            output += " ";
+            additionalSpaces -= 1;
+        }
+        return output;
+    }
 
     public String toString() {
         return name;

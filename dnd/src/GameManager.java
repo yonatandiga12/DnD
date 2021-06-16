@@ -5,7 +5,6 @@ import Players.Mage;
 import Players.Player;
 import Players.Rogue;
 import Players.Warrior;
-import jdk.jshell.execution.LocalExecutionControl;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -14,46 +13,44 @@ import java.util.List;
 
 public class GameManager {
 
-    protected InputProvider inputProvider;
     private LevelInitializer levelInitializer;
     private int currLevel = 1;
     private GameLevel gameLevel;
     private Player player;
     private List<Player> allPlayers;
     private MessageCallback messageCallback;
+    boolean gameWon = false;
 
-    //public Board board;
-    //public Player player;
-    //private List<Enemy> enemiesList = new ArrayList<>();
+    public GameManager() {
 
-    public GameManager(String path, int chosenPlayer) {
-
-        player = startGameAndChoosePlayer(chosenPlayer);
+        startGameAndPrintPlayers();
         setMessageCallBack((msg) -> System.out.println(msg));
+        messageCallback.send(String.format("Select Player: \n%s", printAllPlayers()));
+        messageCallback.send("Insert number of Player: ");
+    }
+
+    public void choosePlayer(String path, int i) {
+        player = ChoosePlayerAccordingtoInput(i);
         levelInitializer = new LevelInitializer(path, player);
         levelInitializer.setMessageCallBack((msg) -> System.out.println(msg));
-
-        messageCallback.send(String.format("Select Player: \n%s", printAllPlayers()));
         messageCallback.send(String.format("You have selected: \n%s", player));
         gameLevel = levelInitializer.initGameLevel(currLevel);
-
     }
+
+
 
 
     public void doAction(String l) {
         if(l.length() == 1){
-            gameLevel.runTick(l.charAt(0)); //or run all level
-
-            System.out.println("Enemies left : " + gameLevel.getNumOfEnemies());
-
+            gameLevel.runTick(l.charAt(0));
             if(gameLevel.isEndOfLevel()){
                 if(currLevel < levelInitializer.getNumOfLevels()){
                     currLevel += 1;
-                    levelInitializer.initGameLevel(currLevel);
-
+                    gameLevel = levelInitializer.initGameLevel(currLevel);
                 }
                 else{
-                    messageCallback.send("You Won");
+                    messageCallback.send("You Won!");
+                    gameWon = true;
                 }
             }
         }
@@ -62,16 +59,15 @@ public class GameManager {
 
 
     public boolean isGameActive() {
-        return gameLevel.isPlayerAlive();
+        return gameLevel.isPlayerAlive() & !gameWon ;
     }
 
 
 
-    private Player startGameAndChoosePlayer( int chosenPlayer) {
+    private void startGameAndPrintPlayers() {
         //print all playeres in screen that the user can choose from:
         allPlayers = createAllPlayers();
         printAllPlayers();
-        return choosePlayer(chosenPlayer); //get from user
 
     }
 
@@ -85,7 +81,7 @@ public class GameManager {
         allPlayers.add(5, new Rogue("Bronn", 250, 35, 2, 50));
         return allPlayers;
     }
-    private Player choosePlayer(int playerNum) {
+    private Player ChoosePlayerAccordingtoInput(int playerNum) {
         Player player;
         switch (playerNum){
             case 1:
@@ -133,5 +129,6 @@ public class GameManager {
     public void setMessageCallBack(MessageCallback m){
         this.messageCallback = m;
     }
+
 
 }

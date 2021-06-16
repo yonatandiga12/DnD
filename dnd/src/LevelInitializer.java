@@ -15,9 +15,6 @@ import java.util.List;
 
 public class LevelInitializer {
 
-    private PlayerDeathCallback deathCallback;
-    private InputProvider inputProvider;
-
     protected String stringPath;
     private Player player;
     protected Board board;
@@ -30,23 +27,19 @@ public class LevelInitializer {
     public LevelInitializer(String path, Player player){
         this.stringPath = path;
         this.player = player;
-
         ArrangePaths();
     }
 
     //read the lvl.txt file and create a level, using the
     public GameLevel initGameLevel(int lvlNum){
         board = loadLevel(lvlNum);
-
         messageCallback.send(board.toString());
-
         gameLevel = new GameLevel(board);
         return gameLevel;
     }
 
     // Arrange all the paths for the levels for easy access
     protected void ArrangePaths(){
-
         File f = new File(stringPath);
         String[] PathsEnds = f.list();
         levelsPaths = new String[f.list().length];
@@ -60,9 +53,6 @@ public class LevelInitializer {
     // Loads from the file all the tiles.
     protected Board loadLevel(int currLevel){
         List<String> listofFile = readFromFileToList(levelsPaths[currLevel - 1]);
-        //List<String> listofFile = readFromFileToString(levelsPaths[2]);
-
-        //GameManager m = new GameManager();
         int width = listofFile.get(0).length();
         int height = listofFile.size();
         board = new Board(height, width);
@@ -90,7 +80,6 @@ public class LevelInitializer {
                 }
             }
         }
-        //currLevel += 1;
         return board;
     }
 
