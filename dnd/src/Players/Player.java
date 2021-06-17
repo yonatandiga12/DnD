@@ -1,13 +1,10 @@
 package Players;
 import Enemies.Enemy;
-import Interfaces.EnemyDeathCallback;
 import Interfaces.InputProvider;
 import Interfaces.MessageCallback;
 import Interfaces.PlayerDeathCallback;
 import Position.Position;
-import Tile.Tile;
 import Units.Unit;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,11 +12,8 @@ import java.util.stream.Stream;
 public abstract class Player extends Unit {
 
     private PlayerDeathCallback deathCallback;
-    private InputProvider inputProvider;
-    public int experience = 0;
     public int level = 1;
     protected int experienceCapacity = level * 50;
-    //public int healthAmount;
     public String ability;
 
 
@@ -28,11 +22,8 @@ public abstract class Player extends Unit {
 
     }
 
-    public Player initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider){
-        super.initialize(position, messageCallback);
-        //this.deathCallback = deathCallback;
-        //this.inputProvider = inputProvider;
-        return this;
+    public void initialize(Position position){
+        super.initialize(position);
     }
 
 
@@ -43,7 +34,6 @@ public abstract class Player extends Unit {
         }
     }
     private void setExperienceAfterKill(int experienceGained) {
-        //int currExperience;
         while(experienceGained >= experienceCapacity - getExperience()){
             int experienceDiff = Math.min(experienceCapacity - getExperience(), experienceGained);
             setExperience(experienceDiff);
@@ -104,7 +94,6 @@ public abstract class Player extends Unit {
     }
 
 
-
     @Override
     public void onDeath() {
         messageCallback.send("You Lost.");
@@ -131,8 +120,6 @@ public abstract class Player extends Unit {
     public List<Enemy> searchForEnemies(int range, List<Enemy> enemiesList){
 
         Stream<Enemy> output = enemiesList.stream().filter((u) -> getPosition().getRange(u.getPosition(), getPosition()) <= range );
-        //List<Enemy> enemies = output.collect(Collectors.toList());
-
         return output.collect(Collectors.toList());
     }
 

@@ -1,8 +1,5 @@
 package Enemies;
 
-import Interfaces.InputProvider;
-import Interfaces.MessageCallback;
-import Interfaces.PlayerDeathCallback;
 import Players.Player;
 import Position.Position;
 import Tile.Tile;
@@ -14,7 +11,6 @@ public class Monster extends Enemy {
 
     Random rand = new Random();
     public char tile;
-    public int experienceValue;
     public int visionRange;
     protected Player player;
 
@@ -26,8 +22,8 @@ public class Monster extends Enemy {
 
     }
 
-    public Enemy initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider) {
-        return super.initialize(position, messageCallback, deathCallback, inputProvider);
+    public void initialize(Position position) {
+        super.initialize(position);
     }
 
 

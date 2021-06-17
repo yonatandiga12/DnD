@@ -1,6 +1,5 @@
 package Tile;
 
-import Enemies.Trap;
 import Position.Position;
 import Units.Unit;
 
@@ -30,13 +29,6 @@ public abstract class Tile implements Comparable<Tile> {
 
     public char toChar() {
         return sign;
-    }
-
-    public void changeChar(Trap t , boolean Invisible) {
-        if(Invisible)
-            sign = '.';
-        else
-            sign = backupSign;
     }
 
     public abstract void accept(Unit unit);

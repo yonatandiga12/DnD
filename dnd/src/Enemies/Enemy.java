@@ -11,9 +11,6 @@ import java.util.Dictionary;
 public abstract class Enemy extends Unit {
 
     private EnemyDeathCallback EnemydeathCallback;
-    //private PlayerDeathCallback PlayerdeathCallback;
-
-    private InputProvider inputProvider;
 
 
     public Enemy(String name, char tileSign, int health, int attack, int defense, int experienceValue){
@@ -21,10 +18,8 @@ public abstract class Enemy extends Unit {
 
     }
 
-    public Enemy initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider){
-        super.initialize(position, messageCallback);
-        this.inputProvider = inputProvider;
-        return this;
+    public void initialize(Position position){
+        super.initialize(position);
     }
 
     public abstract void gameTick();

@@ -1,9 +1,6 @@
 package Players;
 
 import Enemies.Enemy;
-import Interfaces.InputProvider;
-import Interfaces.MessageCallback;
-import Interfaces.PlayerDeathCallback;
 import Position.Position;
 
 import java.util.List;
@@ -30,8 +27,8 @@ public class Mage extends Player {
     }
 
 
-    public Player initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider) {
-        return super.initialize(position, messageCallback, deathCallback, inputProvider);
+    public void initialize(Position position) {
+        super.initialize(position);
     }
 
     public void gameTick(){
@@ -43,7 +40,6 @@ public class Mage extends Player {
     public boolean castAbility(List<Enemy> enemies) {
         Random rand = new Random();
         if(currentMana < manaCost) {
-            //Melisandre tried to cast Blizzard, but there was not enough mana: 9/30.
             messageCallback.send(String.format("%s tried to cast %s, but there was not enough mana: %d/%d.",getName(), ability, manaCost, manaPool));
             return false;
         }

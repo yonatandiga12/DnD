@@ -1,12 +1,5 @@
 package Position;
 
-import Tile.Tile;
-import Units.Unit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 public class Position {
 
     protected int x;
@@ -30,6 +23,19 @@ public class Position {
     }
 
     public Position getInteractionPosition(char goTo){
+        Position p = switch (goTo) {
+            case 'w' -> getUpPosition();
+            case 's' -> getDownPosition();
+            case 'a' -> getLeftPosition();
+            case 'd' -> getRightPosition();
+            default -> this;
+        };
+        return p;
+    }
+
+
+    /*
+    public Position getInteractionPosition(char goTo){
         Position p = this;
          switch(goTo){
             case 'w':
@@ -47,6 +53,7 @@ public class Position {
          }
         return p;
     }
+     */
 
     public int getX() {
         return x;

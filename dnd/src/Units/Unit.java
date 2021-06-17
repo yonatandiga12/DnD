@@ -30,14 +30,12 @@ public abstract class Unit extends Tile {
         this.experience = experience;
     }
 
-    protected void initialize(Position position, MessageCallback messageCallback){
+    protected void initialize(Position position){
         super.initialize(position);
-        //this.messageCallback = messageCallback;
     }
 
     public void interact(Tile tile){
         tile.accept(this);
-        // need to do accept in wall enemy Unit
     }
 
     public void visit(Empty e){

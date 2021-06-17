@@ -54,21 +54,6 @@ public class Board {
         return tiles.get(p.getX() + width * p.getY());
     }
 
-    /*
-
-    public List<Enemy> searchForEnemies(int range, Tile currUnit){
-
-        // Need to see where to put the list of all the tiles
-        //List<Unit> tiles= new ArrayList<>();
-
-        Stream<Enemy> output = enemiesList.stream().filter((u) -> currUnit.getPosition().getRange(u.getPosition(), currUnit.getPosition()) <= range );
-        // need to sort just the enemies out of all the tiles, and not by their chars!!!
-        List<Enemy> enemies = output.collect(Collectors.toList());
-
-        return enemies;
-    }
-     */
-
     public Dictionary<String, Tile> getSurroundingTiles(Position p){
         Dictionary<String,Tile> output = new Hashtable<>();
         output.put("Up", getTileInPosition(p.getUpPosition()) );
@@ -77,8 +62,6 @@ public class Board {
         output.put("Right", getTileInPosition(p.getRightPosition()) );
         return output;
     }
-
-
 
 
     private int getIndex(Tile t){

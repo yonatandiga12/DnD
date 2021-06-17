@@ -69,11 +69,11 @@ public class LevelInitializer {
                     board.add(player);
                     player.setDeathCallback( () -> gameLevel.onPlayerDeath());
                     player.setMessageCallBack((msg) -> System.out.println(msg));
-                    player.initialize(p, null, null, null);
+                    player.initialize(p);
                 }
                 else {
                     Enemy e = findEnemyType(currLetter);
-                    e.initialize(p,null,null,null);
+                    e.initialize(p);
                     e.setDeathCallback( () -> gameLevel.removeEnemy(e));
                     e.setMessageCallBack( (msg) -> System.out.println(msg));
                     board.add(e);
@@ -132,7 +132,6 @@ public class LevelInitializer {
             default:
                 throw new IllegalStateException("Unexpected value: " + currLetter);
         }
-        //board.add(enemy);
         return enemy;
     }
 

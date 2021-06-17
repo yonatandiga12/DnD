@@ -79,7 +79,4 @@ public class GameLevel {
         return enemies.size() == 0;
     }
 
-    public int getNumOfEnemies() {
-        return enemies.size();
-    }
 }

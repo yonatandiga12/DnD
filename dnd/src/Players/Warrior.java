@@ -1,9 +1,6 @@
 package Players;
 
 import Enemies.Enemy;
-import Interfaces.InputProvider;
-import Interfaces.MessageCallback;
-import Interfaces.PlayerDeathCallback;
 import Position.Position;
 
 import java.util.List;
@@ -22,8 +19,8 @@ public class Warrior extends Player{
         this.ability = "Avenger’s Shield";
     }
 
-    public Player initialize(Position position, MessageCallback messageCallback, PlayerDeathCallback deathCallback, InputProvider inputProvider) {
-        return super.initialize(position, messageCallback, deathCallback, inputProvider);
+    public void initialize(Position position) {
+        super.initialize(position);
     }
 
     public void gameTick(){
