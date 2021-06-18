@@ -33,28 +33,6 @@ public class Position {
         return p;
     }
 
-
-    /*
-    public Position getInteractionPosition(char goTo){
-        Position p = this;
-         switch(goTo){
-            case 'w':
-                p = getUpPosition();
-                break;
-            case 's':
-                p = getDownPosition();
-                break;
-             case 'a':
-                 p = getLeftPosition();
-                 break;
-             case 'd':
-                 p = getRightPosition();
-                 break;
-         }
-        return p;
-    }
-     */
-
     public int getX() {
         return x;
     }
